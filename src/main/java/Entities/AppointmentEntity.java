@@ -46,4 +46,6 @@ public class AppointmentEntity extends BaseEntity {
     private AppointmentStatus status;
     
     private String reason;
+    
+    private String cancelReason;
 }
