@@ -11,20 +11,17 @@ import java.util.UUID;
 public interface AppointmentLogger {
 
     void appointmentCreated(
-        BusinessLogContext context,
         UUID appointmentId,
         UUID doctorId,
         LocalDateTime time
     );
 
     void appointmentCancelled(
-        BusinessLogContext context,
         UUID appointmentId,
         String cancelReason
     );
 
     void appointmentCompleted(
-        BusinessLogContext context,
         UUID appointmentId
     );
 }

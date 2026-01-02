@@ -10,7 +10,6 @@ import java.util.UUID;
 public interface PrescriptionLogger {
 
     void prescriptionCreated(
-        BusinessLogContext context,
         UUID prescriptionId,
         UUID appointmentId
     );

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface PatientLogger {
 
-    void patientCreated(BusinessLogContext context, UUID patientId);
+    void patientCreated(UUID patientId);
 
-    void patientUpdated(BusinessLogContext context, UUID patientId);
+    void patientUpdated(UUID patientId);
 }

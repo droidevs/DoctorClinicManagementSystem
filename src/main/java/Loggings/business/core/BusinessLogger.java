@@ -5,7 +5,6 @@
 package Loggings.business.core;
 
 
-import Loggings.business.context.BusinessLogContext;
 import Loggings.business.action.BusinessAction;
 import Loggings.business.resource.ResourceType;
 import java.util.UUID;
@@ -13,7 +12,6 @@ import java.util.UUID;
 public interface BusinessLogger {
 
     void log(
-        BusinessLogContext context,
         BusinessAction action,
         ResourceType resourceType,
         UUID resourceId,

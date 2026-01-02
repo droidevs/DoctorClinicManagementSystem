@@ -8,6 +8,7 @@ package Securities;
 import Enums.Role;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 @RequestScoped
 public class RequestUserContext {
 
-    @Context
+    @Inject
     private SecurityContext securityContext;
 
     private UUID userId;

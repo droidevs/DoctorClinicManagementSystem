@@ -8,9 +8,9 @@ import Loggings.business.context.BusinessLogContext;
 
 public interface AuthLogger {
 
-    void loginSuccess(BusinessLogContext context);
+    void loginSuccess();
 
     void loginFailure(String email);
 
-    void logout(BusinessLogContext context);
+    void logout();
 }

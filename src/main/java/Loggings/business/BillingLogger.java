@@ -11,13 +11,11 @@ import java.util.UUID;
 public interface BillingLogger {
 
     void billCreated(
-        BusinessLogContext context,
         UUID billId,
         BigDecimal amount
     );
 
     void billPaid(
-        BusinessLogContext context,
         UUID billId,
         String paymentMethod
     );

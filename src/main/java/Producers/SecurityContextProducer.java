@@ -12,33 +12,34 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 import java.security.Principal;
 import java.util.Optional;
-import java.util.UUID;
 
-/**
- *
- * @author admin
- */
+@RequestScoped
 public class SecurityContextProducer {
-    
-    
+
     @Inject
     @Context
     private SecurityContext securityContext;
-    
+
+    /**
+     * Produces the CDI injectable SecurityContext for services
+     */
     @Produces
     @RequestScoped
-    public SecurityContext getSecurityContext() {
+    public SecurityContext produceSecurityContext() {
         return securityContext;
     }
-    
+
+    /**
+     * Produces the Principal as Optional<JwtPrincipal>
+     */
     @Produces
     @RequestScoped
-    public Optional<JwtPrincipal> getJwtPrincipal() {
-        Principal principal = securityContext.getUserPrincipal();
-        if (principal instanceof JwtPrincipal) {
-            return Optional.of((JwtPrincipal) principal);
+    public Optional<JwtPrincipal> produceJwtPrincipal() {
+        Principal principal = securityContext != null ? securityContext.getUserPrincipal() : null;
+        if (principal instanceof JwtPrincipal jwtPrincipal) {
+            return Optional.of(jwtPrincipal);
         }
+        
         return Optional.empty();
     }
-    
 }

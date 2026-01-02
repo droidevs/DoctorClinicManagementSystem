@@ -9,6 +9,7 @@ import Loggings.business.action.BusinessAction;
 import Loggings.business.context.BusinessLogContext;
 import Loggings.business.core.BusinessLogger;
 import Loggings.business.resource.ResourceType;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +20,11 @@ public class Slf4jBusinessLogger implements BusinessLogger {
     private static final Logger log =
             LoggerFactory.getLogger("BUSINESS_AUDIT");
 
+    @Inject
+    private BusinessLogContext context;
+    
     @Override
     public void log(
-            BusinessLogContext context,
             BusinessAction action,
             ResourceType resourceType,
             UUID resourceId,

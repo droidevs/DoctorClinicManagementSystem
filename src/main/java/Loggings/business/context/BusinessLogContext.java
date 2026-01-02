@@ -4,13 +4,16 @@
  */
 package Loggings.business.context;
 
+import Enums.Role;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public record BusinessLogContext(
         UUID userId,
-        String role,
+        Set<Role> role,
         Map<String, Object> metadata
 ) {
 
@@ -30,10 +33,18 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            String role,
+            Role role,
             Map<String, Object> metadata
     ) {
-        return new BusinessLogContext(userId, role, metadata);
+        return new BusinessLogContext(userId, Set.of(role), metadata);
+    }
+    
+    public static BusinessLogContext of(
+            UUID userId,
+            Set<Role> roles,
+            Map<String, Object> metadata
+    ) {
+        return new BusinessLogContext(userId, roles, metadata);
     }
 
     /**
@@ -41,16 +52,23 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            String role
+            Role role
     ) {
-        return new BusinessLogContext(userId, role, Map.of());
+        return new BusinessLogContext(userId, Set.of(role), Map.of());
+    }
+    
+    public static BusinessLogContext of(
+            UUID userId,
+            Set<Role> roles
+    ) {
+        return new BusinessLogContext(userId, roles, Map.of());
     }
 
     /**
      * System / anonymous action
      */
     public static BusinessLogContext system() {
-        return new BusinessLogContext(null, "SYSTEM", Map.of());
+        return new BusinessLogContext(null, Set.of(Role.SYSTEM), Map.of());
     }
 
     /**
@@ -59,7 +77,7 @@ public record BusinessLogContext(
     public static BusinessLogContext system(
             Map<String, Object> metadata
     ) {
-        return new BusinessLogContext(null, "SYSTEM", metadata);
+        return new BusinessLogContext(null,Set.of(Role.SYSTEM) , metadata);
     }
 
     /**
@@ -67,13 +85,13 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            String role,
+            Role role,
             String key,
             Object value
     ) {
         return new BusinessLogContext(
                 userId,
-                role,
+                Set.of(role),
                 Map.of(key, value)
         );
     }

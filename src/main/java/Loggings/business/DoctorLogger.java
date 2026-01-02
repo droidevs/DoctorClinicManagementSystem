@@ -10,10 +10,9 @@ import java.util.UUID;
 
 public interface DoctorLogger {
 
-    void doctorCreated(BusinessLogContext context, UUID doctorId);
+    void doctorCreated(UUID doctorId);
 
     void specialisationsAssigned(
-        BusinessLogContext context,
         UUID doctorId,
         Set<UUID> specialisationIds
     );
