@@ -11,6 +11,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        
+        <jjwt.version>0.12.5</jjwt.version>  <!-- Use 0.11.5 for Java 8 -->
+        <bcrypt.version>0.10.2</bcrypt.version>
+        <!-- JSON Processing -->
+        <jsonb.version>3.0.0</jsonb.version>
+        <jackson.version>2.15.3</jackson.version>
+        
+        <slf4j.version>2.0.9</slf4j.version>
     </properties>
     
     <dependencies>
@@ -39,6 +47,39 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- JJWT (Java JWT) - Recommended -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>  <!-- For JSON parsing -->
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>0.10.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
     </dependencies>

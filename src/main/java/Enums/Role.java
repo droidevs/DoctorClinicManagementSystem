@@ -12,5 +12,6 @@ public enum Role {
     
     ADMIN,
     DOCTOR,
-    PATIENT
+    PATIENT,
+    SYSTEM
 }
