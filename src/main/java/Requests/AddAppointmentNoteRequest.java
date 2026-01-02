@@ -9,7 +9,7 @@ package Requests;
  * @author admin
  */
 public record AddAppointmentNoteRequest(
-        String appointmentId,
+        //String appointmentId,
         String notes
         ) {
 

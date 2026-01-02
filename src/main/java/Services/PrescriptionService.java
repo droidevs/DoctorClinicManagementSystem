@@ -4,20 +4,16 @@
  */
 package Services;
 
-import Dtos.UserDto;
+import Dtos.PrescriptionDto;
+import Requests.CreatePrescriptionRequest;
 import java.util.List;
 import java.util.UUID;
 
+public interface PrescriptionService {
 
-public interface UserService {
+    PrescriptionDto create(CreatePrescriptionRequest request);
 
-    UserDto create(CreateUserRequest dto);
+    PrescriptionDto findById(UUID id);
 
-    UserDto findById(UUID id);
-
-    UserDto findByEmail(String email);
-
-    List<UserDto> findAll();
-
-    void disable(UUID id);
+    List<PrescriptionDto> findAll();
 }

@@ -4,6 +4,7 @@
  */
 package Requests;
 
+import Enums.AppointmentStatus;
 import java.time.LocalDateTime;
 
 /**
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  */
 public record UpdateAppointmentRequest(
         LocalDateTime appointmentDatetime,
+        AppointmentStatus status,
         String reason
         ) {
 
