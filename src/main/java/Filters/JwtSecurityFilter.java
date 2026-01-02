@@ -11,6 +11,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @author admin
  */
 @Provider
+@Priority(FilterPriority.JWT_SECURITY)
 public class JwtSecurityFilter implements ContainerRequestFilter {
 
     @Inject

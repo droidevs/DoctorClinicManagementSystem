@@ -4,16 +4,21 @@
  */
 package Loggings;
 
+import Filters.FilterPriority;
+import jakarta.annotation.Priority;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 
 /**
  *
  * @author admin
  */
+@Provider
+@Priority(FilterPriority.CORRELATION_ID)
 public class CorrelationIdFilter implements ContainerRequestFilter, ContainerResponseFilter{
 
     public static final String HEADER_NAME = "X-Correlation-Id";
