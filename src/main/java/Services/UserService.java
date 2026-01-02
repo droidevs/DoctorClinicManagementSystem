@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public interface UserService {
 
-    UserDto create(CreateUserRequest dto);
-
     UserDto findById(UUID id);
 
     UserDto findByEmail(String email);
