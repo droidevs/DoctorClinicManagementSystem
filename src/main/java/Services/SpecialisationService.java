@@ -6,6 +6,10 @@ package Services;
 
 import Dtos.SpecialisationDto;
 import Requests.CreateSpecialisationRequest;
+import Requests.SpecialisationFilterRequest;
+import Requests.UpdateSpecialisationRequest;
+import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -18,4 +22,11 @@ public interface SpecialisationService {
     
     SpecialisationDto delete(String id);
     
+    SpecialisationDto findById(String id);
+    
+    List<SpecialisationDto> findAll();
+    
+    List<SpecialisationDto> filter(SpecialisationFilterRequest request);
+
+    public SpecialisationDto update(UUID id, UpdateSpecialisationRequest request);
 }

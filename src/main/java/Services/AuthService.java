@@ -19,4 +19,6 @@ public interface AuthService {
     
     void register(RegisterUserRequest request);
     
+    void logout();
+    
 }

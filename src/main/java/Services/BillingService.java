@@ -6,6 +6,7 @@ package Services;
 
 
 import Dtos.BillDto;
+import Requests.BillFilterRequest;
 import Requests.CreateBillRequest;
 import Requests.PayBillRequest;
 import java.util.List;
@@ -18,6 +19,8 @@ public interface BillingService {
     BillDto findById(UUID id);
 
     List<BillDto> findAll();
+    
+    List<BillDto> filter(BillFilterRequest request);
 
     BillDto pay(UUID id, PayBillRequest request);
 }

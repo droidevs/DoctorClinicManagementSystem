@@ -8,7 +8,6 @@ package Requests;
  *
  * @author admin
  */
-public record CreateSpecialisationRequest(
-        String name,
-        String description
-        ) {}
+public record SpecialisationFilterRequest(
+    String searchQuery
+) {}

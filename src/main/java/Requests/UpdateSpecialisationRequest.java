@@ -8,7 +8,7 @@ package Requests;
  *
  * @author admin
  */
-public record CreateSpecialisationRequest(
-        String name,
-        String description
-        ) {}
+public record UpdateSpecialisationRequest(
+    String name,
+    String description
+) {}
