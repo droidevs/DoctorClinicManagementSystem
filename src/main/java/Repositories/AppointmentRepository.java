@@ -7,6 +7,7 @@ package Repositories;
 
 import Entities.AppointmentEntity;
 import Enums.AppointmentStatus;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,4 +38,8 @@ public interface AppointmentRepository {
     );
 
     void delete(AppointmentEntity appointment);
+    
+    long countByTimeSlotAndDate(UUID slotId, LocalDate date);
+
+    long countByExceptionSlotAndDate(UUID exceptionSlotId, LocalDate date);
 }
