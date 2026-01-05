@@ -9,12 +9,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.time.LocalDateTime;
 import Enums.AppointmentStatus;
+import java.time.Instant;
 
 public record AppointmentDto(
     UUID id,
     PatientDto patient,
     DoctorDto doctor,
     LocalDateTime appointmentDatetime,
+    TimeSlotDto slot,
     AppointmentStatus status,
-    String reason
+    String reason,
+    Instant createdAt
 ) {}
