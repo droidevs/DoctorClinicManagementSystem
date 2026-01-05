@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -40,6 +41,16 @@ public class AppointmentEntity extends BaseEntity {
     
     @Column(name = "date_time")
     private LocalDateTime appointmentDatetime;
+    
+    /** Normal booking */
+    @ManyToOne
+    @JoinColumn(name = "time_slot_id")
+    private TimeSlotEntity timeSlot;
+
+    /** Exception booking */
+    @ManyToOne
+    @JoinColumn(name = "exception_slot_id")
+    private ExceptionTimeSlotEntity exceptionSlot;
     
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-    <!-- Define Persistence Unit -->
-    <persistence-unit name="my_persistence_unit">
-        
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.1">
+    <persistence-unit name="myPU">
+        <class>Entities.AuditLog</class>
+        <properties>
+            <!-- MySQL JDBC connection -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/auditdb?useSSL=false&serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.user" value="your_db_user"/>
+            <property name="jakarta.persistence.jdbc.password" value="your_db_password"/>
+            
+            <!-- Automatically create tables (use 'update' in prod instead of 'create') -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            
+            <!-- Optional: show SQL in console -->
+            <property name="jakarta.persistence.logging.level" value="FINE"/>
+        </properties>
     </persistence-unit>
 </persistence>
+
