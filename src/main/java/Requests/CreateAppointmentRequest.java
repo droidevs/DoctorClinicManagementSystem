@@ -5,6 +5,7 @@
 package Requests;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 public record CreateAppointmentRequest(
         String patientId,
         String doctorId,
-        LocalDateTime appointmentDatetime
+        LocalDateTime appointmentDatetime,
+        UUID slotId,              // normal slot (weekly)
+        UUID exceptionSlotId      // exception slot (CUSTOM_SLOTS)
         ) {
 
 }
