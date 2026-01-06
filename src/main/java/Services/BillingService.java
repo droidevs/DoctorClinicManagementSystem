@@ -8,7 +8,7 @@ package Services;
 import Dtos.BillDto;
 import Requests.BillFilterRequest;
 import Requests.CreateBillRequest;
-import Requests.PayBillRequest;
+import Requests.PaymentRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,5 +22,5 @@ public interface BillingService {
     
     List<BillDto> filter(BillFilterRequest request);
 
-    BillDto pay(UUID id, PayBillRequest request);
+    BillDto pay(UUID id, PaymentRequest request);
 }

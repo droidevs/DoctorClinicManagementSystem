@@ -7,7 +7,7 @@ package Resources;
 import Dtos.BillDto;
 import Requests.BillFilterRequest;
 import Requests.CreateBillRequest;
-import Requests.PayBillRequest;
+import Requests.PaymentRequest;
 import Services.BillingService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -63,7 +63,7 @@ public class BillingResource {
     @Path("/{id}/pay")
     public Response payBill(
             @PathParam("id") UUID id,
-            @Valid PayBillRequest request) {
+            @Valid PaymentRequest request) {
         
         BillDto paidBill = billingService.pay(id, request);
         return Response.ok(paidBill).build();

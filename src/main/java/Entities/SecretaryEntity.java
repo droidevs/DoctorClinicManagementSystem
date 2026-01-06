@@ -4,14 +4,14 @@
  */
 package Entities;
 
-import Enums.Role;
+import Enums.SecretaryStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,31 +19,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author admin
- */
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class UserEntity extends BaseEntity {
-    
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
-    
-    @Column(name = "email",nullable = false, unique = true)
-    private String email;
-    
-    @Column(name = "password",nullable = false)
-    private String passwordHash;
-    
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private RoleEntity role;
-    
-    private boolean enabled = true;
+@Table(name = "secretaries")
+public class SecretaryEntity extends BaseEntity {
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private UserEntity user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SecretaryStatus status;
+
+    /* ---- Permissions (business-level, NOT auth-level) ---- */
+
+    @Column(nullable = false)
+    private boolean canReceivePayments;
+
+    @Column(nullable = false)
+    private boolean canVerifyIdentity;
+
+    @Column(nullable = false)
+    private boolean canMergeAccounts;
 }

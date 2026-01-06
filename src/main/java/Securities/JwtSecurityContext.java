@@ -11,23 +11,29 @@ import java.security.Principal;
  *
  * @author admin
  */
+
 public class JwtSecurityContext implements SecurityContext {
 
-    private final JwtPrincipal principale;
+    private final JwtPrincipal principal;
     private final boolean secure;
-    
-    public JwtSecurityContext(JwtPrincipal principale, boolean secure) {
-        this.principale = principale;
+
+    public JwtSecurityContext(JwtPrincipal principal, boolean secure) {
+        this.principal = principal;
         this.secure = secure;
-    }
-    @Override
-    public Principal getUserPrincipal() {
-       return principale;
     }
 
     @Override
+    public Principal getUserPrincipal() {
+        return principal;
+    }
+
+    /**
+     * Role-based check (kept for compatibility)
+     * Prefer permission-based checks instead.
+     */
+    @Override
     public boolean isUserInRole(String role) {
-        return principale != null && principale.hasRole(role);
+        return principal != null && principal.hasRole(role);
     }
 
     @Override
@@ -39,5 +45,18 @@ public class JwtSecurityContext implements SecurityContext {
     public String getAuthenticationScheme() {
         return "JWT";
     }
+
     
+    public boolean hasPermission(String permissionCode) {
+        return principal != null && principal.hasPermission(permissionCode);
+    }
+
+    public boolean hasAnyPermission(String... permissions) {
+        return principal != null && principal.hasAnyPermission(permissions);
+    }
+
+    public boolean isAuthenticated() {
+        return principal != null;
+    }
 }
+

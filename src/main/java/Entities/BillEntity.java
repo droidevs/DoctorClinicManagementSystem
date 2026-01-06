@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,8 +44,6 @@ public class BillEntity extends BaseEntity {
     @Column(name = "status")
     private BillStatus status;
     
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-    
-    private LocalDateTime paidAt;
+    private Instant generatedAt;
+    private Instant paidAt;
 }

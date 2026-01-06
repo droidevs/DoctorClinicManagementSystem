@@ -4,8 +4,10 @@
  */
 package Filters;
 
+import Dtos.RoleDto;
 import Securities.SecurityContextProvider;
 import Services.JwtService;
+import Services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -21,6 +23,7 @@ import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -35,6 +38,9 @@ public class JwtSecurityFilter implements ContainerRequestFilter {
     
     @Inject
     private SecurityContextProvider securityContextProvider;
+    
+    @Inject
+    private UserService userService;
     
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -56,6 +62,7 @@ public class JwtSecurityFilter implements ContainerRequestFilter {
         try {
             Jws<Claims> jws = jwtService.validateToken(token);
             Claims claims = jws.getPayload();
+            // todo : get roles
             securityContextProvider.setContext(requestContext, claims, token);
             
         } catch(ExpiredJwtException e) {

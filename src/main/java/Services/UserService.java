@@ -4,8 +4,10 @@
  */
 package Services;
 
+import Dtos.RoleDto;
 import Dtos.UserDto;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -18,4 +20,8 @@ public interface UserService {
     List<UserDto> findAll();
 
     void disable(UUID id);
+    
+    UUID resolveUserId(String principalName);
+    
+    Set<RoleDto> getUserRoles(UUID userId);
 }

@@ -4,34 +4,48 @@
  */
 package Securities;
 
+import Dtos.RoleDto;
 import Services.JwtService;
+import Services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.SecurityContext;
-import java.util.List;
+
+import java.util.Set;
 import java.util.UUID;
 
-/**
- *
- * @author admin
- */
 public class SecurityContextProvider {
 
+    @Inject
     private JwtService service;
+    
+    @Inject
+    private UserService userService;
+
+    public SecurityContextProvider() {
+    }
 
     public void setContext(ContainerRequestContext ctx, Claims claims, String token) {
 
         try {
+            // Extract user identity
             UUID userId = service.extractUserId(claims);
             String username = service.extractUsername(claims);
-            List<String> roles = service.extractRoles(claims);
-
-            JwtPrincipal principale = new JwtPrincipal(userId, username, roles, token);
-            SecurityContext context = new JwtSecurityContext(principale, ctx.getSecurityContext().isSecure());
             
-            ctx.setSecurityContext(context);
+            Set<RoleDto> roles = userService.getUserRoles(userId);
+            // Build principal
+            JwtPrincipal principal = new JwtPrincipal(userId, username, roles);
+
+            // Build security context
+            SecurityContext securityContext = new JwtSecurityContext(principal, ctx.getSecurityContext().isSecure());
+
+            ctx.setSecurityContext(securityContext);
+
         } catch (JwtException e) {
+            // Failed JWT parsing -> do nothing (context remains unauthenticated)
         }
     }
 }
+

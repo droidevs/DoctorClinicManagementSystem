@@ -5,16 +5,17 @@
 package Securities;
 
 
-import Enums.Role;
+import Dtos.RoleDto;
+import Dtos.PermissionDto;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 
-import java.util.EnumSet;
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequestScoped
 public class RequestUserContext {
@@ -23,7 +24,8 @@ public class RequestUserContext {
     private SecurityContext securityContext;
 
     private UUID userId;
-    private Set<Role> roles;
+    private Set<RoleDto> roles;
+    private Set<String> permissionCodes;
 
     @PostConstruct
     void init() {
@@ -32,15 +34,31 @@ public class RequestUserContext {
             securityContext.getUserPrincipal() == null) {
 
             this.userId = null;
-            this.roles = EnumSet.of(Role.SYSTEM);
+            this.roles = Collections.emptySet();
+            this.permissionCodes = Collections.emptySet();
             return;
         }
 
-        this.userId = parseUserId(
-                securityContext.getUserPrincipal().getName()
-        );
+        this.userId = parseUserId(securityContext.getUserPrincipal().getName());
 
-        this.roles = resolveRoles(securityContext);
+        if (userId == null) {
+            this.roles = Collections.emptySet();
+            this.permissionCodes = Collections.emptySet();
+            return;
+        }
+
+        Object principalObj = securityContext.getUserPrincipal();
+        if (principalObj instanceof JwtPrincipal jwtPrincipal) {
+            this.roles = jwtPrincipal.getRoles();
+            this.permissionCodes = roles.stream()
+                    .flatMap(r -> r.permissions().stream())
+                    .map(PermissionDto::code)
+                    .collect(Collectors.toUnmodifiableSet());
+        } else {
+            // fallback empty
+            this.roles = Collections.emptySet();
+            this.permissionCodes = Collections.emptySet();
+        }
     }
 
     private UUID parseUserId(String principalName) {
@@ -51,37 +69,36 @@ public class RequestUserContext {
         }
     }
 
-    private Set<Role> resolveRoles(SecurityContext ctx) {
-
-        EnumSet<Role> resolvedRoles = EnumSet.noneOf(Role.class);
-
-        for (Role role : Role.values()) {
-            if (role != Role.SYSTEM &&
-                ctx.isUserInRole(role.name())) {
-                resolvedRoles.add(role);
-            }
-        }
-
-        return resolvedRoles.isEmpty()
-                ? EnumSet.of(Role.SYSTEM)
-                : resolvedRoles;
-    }
-
     // --------- API ---------
 
     public UUID userId() {
         return userId;
     }
 
-    public Set<Role> roles() {
+    public Set<RoleDto> roles() {
         return roles;
     }
 
-    public boolean hasRole(Role role) {
-        return roles.contains(role);
+    public Set<String> permissionCodes() {
+        return permissionCodes;
+    }
+
+    public boolean hasRole(String roleName) {
+        return roles.stream().anyMatch(r -> r.name().equals(roleName));
+    }
+
+    public boolean hasPermission(String permissionCode) {
+        return permissionCodes.contains(permissionCode);
+    }
+
+    public boolean hasAnyPermission(String... permissions) {
+        for (String p : permissions) {
+            if (permissionCodes.contains(p)) return true;
+        }
+        return false;
     }
 
     public boolean isAuthenticated() {
-        return userId != null && !roles.contains(Role.SYSTEM);
+        return userId != null && !roles.isEmpty();
     }
 }
