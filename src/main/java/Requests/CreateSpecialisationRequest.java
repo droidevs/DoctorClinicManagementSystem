@@ -4,11 +4,19 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
+import Validators.annotations.ValidDescription;
+import Validators.annotations.ValidSpecialisationName;
+import Validators.annotations.ValidSpecialisationRequest;
+import jakarta.validation.constraints.*;
+import java.util.regex.Pattern;
+
+@ValidSpecialisationRequest
 public record CreateSpecialisationRequest(
-        String name,
-        String description
-        ) {}
+    
+    @ValidSpecialisationName
+    String name,
+    
+    @ValidDescription
+    String description
+    
+) {}

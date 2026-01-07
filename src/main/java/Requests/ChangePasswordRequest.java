@@ -4,11 +4,16 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
+import Validators.annotations.ValidPassword;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public record ChangePasswordRequest(
+
+        @ValidPassword
         String oldPassword,
+
+        @ValidPassword
         String newPassword
-        ) {}
+
+) {}

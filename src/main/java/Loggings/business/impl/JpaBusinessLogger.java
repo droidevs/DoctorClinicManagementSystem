@@ -4,6 +4,7 @@
  */
 package Loggings.business.impl;
 
+import Dtos.RoleDto;
 import Entities.AuditLog;
 import Loggings.business.action.BusinessAction;
 import Loggings.business.context.BusinessLogContext;
@@ -16,6 +17,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.time.Instant;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,8 +35,7 @@ public class JpaBusinessLogger implements BusinessLogger {
     public void log(BusinessAction action, ResourceType resourceType, UUID resourceId, String description) {
 
         AuditLog audit = new AuditLog(
-                context.userId(),
-                context.role().stream().map(Enum::name).collect(Collectors.toSet()),
+                context.userId(), (Set<String>) context.role().stream().map(RoleDto::name),
                 action,
                 resourceType,
                 resourceId,

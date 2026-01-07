@@ -4,6 +4,7 @@
  */
 package Loggings.business.context;
 
+import Dtos.RoleDto;
 import Enums.Role;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public record BusinessLogContext(
         UUID userId,
-        Set<Role> role,
+        Set<RoleDto> role,
         Map<String, Object> metadata
 ) {
 
@@ -33,7 +34,7 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            Role role,
+            RoleDto role,
             Map<String, Object> metadata
     ) {
         return new BusinessLogContext(userId, Set.of(role), metadata);
@@ -41,7 +42,7 @@ public record BusinessLogContext(
     
     public static BusinessLogContext of(
             UUID userId,
-            Set<Role> roles,
+            Set<RoleDto> roles,
             Map<String, Object> metadata
     ) {
         return new BusinessLogContext(userId, roles, metadata);
@@ -52,32 +53,16 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            Role role
+            RoleDto role
     ) {
         return new BusinessLogContext(userId, Set.of(role), Map.of());
     }
     
     public static BusinessLogContext of(
             UUID userId,
-            Set<Role> roles
+            Set<RoleDto> roles
     ) {
         return new BusinessLogContext(userId, roles, Map.of());
-    }
-
-    /**
-     * System / anonymous action
-     */
-    public static BusinessLogContext system() {
-        return new BusinessLogContext(null, Set.of(Role.SYSTEM), Map.of());
-    }
-
-    /**
-     * System action with metadata
-     */
-    public static BusinessLogContext system(
-            Map<String, Object> metadata
-    ) {
-        return new BusinessLogContext(null,Set.of(Role.SYSTEM) , metadata);
     }
 
     /**
@@ -85,7 +70,7 @@ public record BusinessLogContext(
      */
     public static BusinessLogContext of(
             UUID userId,
-            Role role,
+            RoleDto role,
             String key,
             Object value
     ) {

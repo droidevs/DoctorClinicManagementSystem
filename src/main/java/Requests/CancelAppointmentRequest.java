@@ -4,12 +4,13 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
-public record CancelAppointmentRequest(
-        String reason
-        ) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-}
+public record CancelAppointmentRequest(
+
+        @NotBlank(message = "Reason for cancellation cannot be blank")
+        @Size(max = 500, message = "Reason cannot exceed 500 characters")
+        String reason
+
+) {}

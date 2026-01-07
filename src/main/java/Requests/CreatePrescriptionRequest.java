@@ -4,16 +4,26 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
-public record CreatePrescriptionRequest(
-        String appointmentId,
-        String medicineName,
-        String dosage,
-        String frequency,
-        String instructions
-        ) {
+import Validators.annotations.ValidMedicineName;
+import Validators.annotations.ValidUUID;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import java.util.UUID;
 
-}
+
+public record CreatePrescriptionRequest(
+        
+    @ValidUUID 
+    UUID appointmentId,
+        
+    @ValidMedicineName 
+    String medicineName,
+    
+    @Valid @NotNull 
+    DosageModel dosage,
+    
+    @Valid @NotNull 
+    FrequencyModel frequency,
+    
+    String instructions
+) {}

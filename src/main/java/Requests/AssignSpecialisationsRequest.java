@@ -4,12 +4,15 @@
  */
 package Requests;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.util.Set;
+import java.util.UUID;
 
-/**
- *
- * @author admin
- */
 public record AssignSpecialisationsRequest(
-        Set<String> specialisationIds
-        ) {}
+
+        @NotNull(message = "Specialisation IDs cannot be null")
+        @NotEmpty(message = "At least one specialisation ID must be provided")
+        Set<@NotNull(message = "Specialisation ID cannot be null") UUID> specialisationIds
+        
+) {}

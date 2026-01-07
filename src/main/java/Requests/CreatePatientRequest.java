@@ -4,20 +4,39 @@
  */
 package Requests;
 
+import Validators.annotations.ValidAddress;
+import Validators.annotations.ValidDateOfBirth;
+import Validators.annotations.ValidGender;
+import Validators.annotations.ValidName;
+import Validators.annotations.ValidPhoneNumber;
+import Validators.annotations.ValidUUID;
 import java.time.LocalDate;
+import jakarta.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.UUID;
 
-/**
- *
- * @author admin
- */
 public record CreatePatientRequest(
-        String userId,
-        String firstName,
-        String lastName,
-        String gender,
-        LocalDate dateOfBirth,
-        String phone,
-        String address
-        ) {
-
-}
+    
+    @ValidUUID
+    UUID userId,
+    
+    @ValidName
+    String firstName,
+    
+    @ValidName
+    String lastName,
+    
+    @ValidGender
+    String gender,
+    
+    @ValidDateOfBirth
+    LocalDate dateOfBirth,
+    
+    @ValidPhoneNumber
+    String phone,
+    
+    @ValidAddress
+    String address
+    
+) {}

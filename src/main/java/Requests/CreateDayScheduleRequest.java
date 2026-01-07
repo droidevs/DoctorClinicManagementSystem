@@ -7,8 +7,25 @@ package Requests;
 import Enums.ReservationType;
 import java.util.UUID;
 
+import Enums.ReservationType;
+import Jsons.UniversalEnumHandler;
+import Validators.annotations.ValidDayOfWeek;
+import Validators.annotations.ValidUUID;
+import jakarta.json.bind.annotation.JsonbTypeSerializer;
+import jakarta.validation.constraints.*;
+import java.util.UUID;
+
+
 public record CreateDayScheduleRequest(
-        UUID weeklyScheduleId,
-        int dayOfWeek, // 1 = Monday ... 7 = Sunday
-        ReservationType reservationType
+    
+    @ValidUUID(message = "Weekly schedule ID must be a valid UUID")
+    UUID weeklyScheduleId,
+    
+    @ValidDayOfWeek
+    int dayOfWeek, // 1 = Monday ... 7 = Sunday
+    
+    @NotNull(message = "Reservation type is required")
+    @JsonbTypeSerializer(UniversalEnumHandler.class)
+    ReservationType reservationType
+    
 ) {}

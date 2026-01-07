@@ -4,13 +4,18 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
-public record AddAppointmentNoteRequest(
-        //String appointmentId,
-        String notes
-        ) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
-}
+public record AddAppointmentNoteRequest(
+
+        //@NotNull(message = "Appointment ID is required")
+        //UUID appointmentId, // Uncomment if you want to include appointmentId
+
+        @NotBlank(message = "Notes cannot be blank")
+        @Size(max = 1000, message = "Notes cannot exceed 1000 characters")
+        String notes
+
+) {}
+

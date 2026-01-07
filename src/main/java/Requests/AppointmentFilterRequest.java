@@ -4,17 +4,33 @@
  */
 package Requests;
 
+import Validators.annotations.ValidAppointmentDate;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.UUID;
 
-/**
- *
- * @author admin
- */
+
+@ValidAppointmentDate
 public record AppointmentFilterRequest(
-        String doctorId,
-        String patientId,
-        LocalDate date,
-        String status
-        ) {
 
-}
+        // Optional filter by doctor
+        // @NotNull can be added if required
+        UUID doctorId,
+
+        // Optional filter by patient
+        UUID patientId,
+
+        // Filter by appointment date
+        // @PastOrPresent // use if only past dates allowed
+        @Nullable
+        LocalDate date,
+
+        // Filter by status (e.g., "SCHEDULED", "COMPLETED", "CANCELLED")
+        @Pattern(regexp = "SCHEDULED|COMPLETED|CANCELLED",
+                 message = "Status must be one of SCHEDULED, COMPLETED, or CANCELLED")
+        @Nullable
+        String status
+
+) {}

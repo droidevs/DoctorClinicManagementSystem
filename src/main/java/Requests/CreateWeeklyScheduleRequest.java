@@ -4,9 +4,11 @@
  */
 package Requests;
 
+import Validators.annotations.ValidUUID;
 import java.util.UUID;
 
 
 public record CreateWeeklyScheduleRequest(
+        @ValidUUID
         UUID doctorId
 ) {}

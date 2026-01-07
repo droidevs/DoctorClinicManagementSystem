@@ -9,7 +9,9 @@ package Requests;
  * @author admin
  */
 public record PageRequest(
+        
         int page,
+        
         int size
         ) {
 

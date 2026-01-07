@@ -4,13 +4,25 @@
  */
 package Requests;
 
-/**
- *
- * @author admin
- */
+
+import Validators.annotations.ValidGender;
+import Validators.annotations.ValidName;
+import Validators.annotations.ValidUUID;
+import jakarta.validation.constraints.*;
+import java.util.UUID;
+
 public record CreateDoctorRequest(
-        String userId,
-        String firstName,
-        String lastName,
-        String gender
-        ) {}
+    
+    @ValidUUID
+    UUID userId,
+    
+    @ValidName
+    String firstName,
+    
+    @ValidName
+    String lastName,
+    
+    @ValidGender
+    String gender
+    
+) {}

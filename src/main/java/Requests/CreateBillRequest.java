@@ -4,15 +4,21 @@
  */
 package Requests;
 
+import Jsons.UniversalEnumHandler;
+import Validators.annotations.ValidMonetaryAmount;
+import Validators.annotations.ValidUUID;
+import jakarta.json.bind.annotation.JsonbTypeSerializer;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.UUID;
 
-/**
- *
- * @author admin
- */
 public record CreateBillRequest(
-        String appointmentId,
-        BigDecimal amount
-        ) {
-
-}
+    
+    @ValidUUID
+    UUID appointmentId,
+    
+    @ValidMonetaryAmount
+    BigDecimal amount
+    
+) {}

@@ -4,21 +4,26 @@
  */
 package Requests;
 
+import Validators.annotations.ValidAppointmentSlots;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
-
-/**
- *
- * @author admin
- */
+@ValidAppointmentSlots
 public record CreateAppointmentRequest(
-        String patientId,
-        String doctorId,
-        LocalDateTime appointmentDatetime,
-        UUID slotId,              // normal slot (weekly)
-        UUID exceptionSlotId      // exception slot (CUSTOM_SLOTS)
-        ) {
 
-}
+        @NotNull(message = "Patient ID is required")
+        UUID patientId,
+
+        @NotNull(message = "Doctor ID is required")
+        UUID doctorId,
+
+        @NotNull(message = "Appointment datetime is required")
+        @FutureOrPresent(message = "Appointment datetime cannot be in the past")
+        LocalDateTime appointmentDatetime,
+
+        UUID slotId,              // normal weekly slot
+        UUID exceptionSlotId      // custom slot (optional)
+) {}
+

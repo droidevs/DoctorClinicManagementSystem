@@ -5,16 +5,37 @@
 package Requests;
 
 import Enums.SlotCode;
+import Validators.annotations.ValidMaxReservations;
+import Validators.annotations.ValidOrderIndex;
+import Validators.annotations.ValidSlotCode;
+import Validators.annotations.ValidTime;
+import Validators.annotations.ValidTimeSlotRequest;
+import Validators.annotations.ValidUUID;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.UUID;
 
 
+@ValidTimeSlotRequest
 public record CreateTimeSlotRequest(
-        UUID dayScheduleId,
-        SlotCode slotCode,
-        LocalTime startTime,
-        LocalTime endTime,
-        int maxReservations,
-        int orderIndex
+    
+    @ValidUUID
+    UUID dayScheduleId,
+    
+    @ValidSlotCode
+    SlotCode slotCode,
+    
+    @ValidTime
+    LocalTime startTime,
+    
+    @ValidTime
+    LocalTime endTime,
+    
+    @ValidMaxReservations
+    int maxReservations,
+    
+    @ValidOrderIndex
+    int orderIndex
+    
 ) {}
 

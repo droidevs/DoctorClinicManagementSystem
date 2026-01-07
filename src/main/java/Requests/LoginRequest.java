@@ -4,11 +4,18 @@
  */
 package Requests;
 
+import Validators.annotations.ValidEmail;
+import Validators.annotations.ValidPassword;
+
 /**
  *
  * @author admin
  */
 public record LoginRequest(
+        
+        @ValidEmail
         String email,
+        
+        @ValidPassword
         String password
         ) {}
