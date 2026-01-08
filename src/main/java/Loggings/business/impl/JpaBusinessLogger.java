@@ -34,6 +34,17 @@ public class JpaBusinessLogger implements BusinessLogger {
     @Transactional
     public void log(BusinessAction action, ResourceType resourceType, UUID resourceId, String description) {
         
-        
+        AuditLog audit = new AuditLog(
+                context.userId(), (Set<String>) context.role().stream().map(RoleDto::name),
+                action,
+                resourceType,
+                resourceId,
+                description,
+                context.metadata().entrySet().stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toString())),
+                Instant.now()
+        );
+
+        em.persist(audit); // persist audit to DB
     }
 }
