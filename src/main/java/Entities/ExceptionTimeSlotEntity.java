@@ -21,8 +21,6 @@ public class ExceptionTimeSlotEntity extends BaseEntity {
     @JoinColumn(name = "exception_id")
     private ScheduleExceptionEntity exception;
 
-    private String slotCode;
-
     @Column(nullable = false)
     private LocalTime startTime;
 

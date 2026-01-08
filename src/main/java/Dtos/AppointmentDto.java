@@ -5,19 +5,25 @@
 package Dtos;
 
 
+import Entities.ExceptionTimeSlotEntity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.time.LocalDateTime;
 import Enums.AppointmentStatus;
 import java.time.Instant;
+import java.time.LocalDate;
 
 public record AppointmentDto(
     UUID id,
     PatientDto patient,
     DoctorDto doctor,
-    LocalDateTime appointmentDatetime,
+    LocalDate appointmentDate,
     TimeSlotDto slot,
+    TimeSlotDto exceptionSlot,
     AppointmentStatus status,
     String reason,
-    Instant createdAt
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}

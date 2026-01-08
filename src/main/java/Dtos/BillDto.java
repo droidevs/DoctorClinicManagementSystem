@@ -7,6 +7,7 @@ package Dtos;
 import Enums.BillStatus;
 import Enums.PaymentMethod;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,5 +21,11 @@ public record BillDto(
     BigDecimal amount,
     BillStatus status,
     PaymentMethod paymentMethod,
-    LocalDateTime paidAt
+    Instant paidAt,
+    
+    // Audit fields (same order as AppointmentDto)
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}

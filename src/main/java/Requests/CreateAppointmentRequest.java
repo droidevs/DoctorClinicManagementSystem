@@ -7,6 +7,7 @@ package Requests;
 import Validators.annotations.ValidAppointmentSlots;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ public record CreateAppointmentRequest(
 
         @NotNull(message = "Appointment datetime is required")
         @FutureOrPresent(message = "Appointment datetime cannot be in the past")
-        LocalDateTime appointmentDatetime,
+        LocalDate appointmentDate,
 
         UUID slotId,              // normal weekly slot
         UUID exceptionSlotId      // custom slot (optional)

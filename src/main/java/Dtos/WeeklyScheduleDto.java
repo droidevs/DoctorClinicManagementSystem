@@ -4,12 +4,19 @@
  */
 package Dtos;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 public record WeeklyScheduleDto(
         UUID id,
         UUID doctorId,
-        List<DayScheduleDto> days
+        List<DayScheduleDto> days,
+        
+        // Audit fields (same order as AppointmentDto)
+        UserDto createdBy,
+        Instant createdAt,
+        UserDto updatedBy,
+        Instant updatedAt
 ) {}
 

@@ -4,7 +4,6 @@
  */
 package Validators;
 
-import Enums.SlotCode;
 import Requests.CreateTimeSlotRequest;
 import Validators.annotations.ValidTimeSlotRequest;
 import jakarta.validation.Constraint;
@@ -72,16 +71,6 @@ public class TimeSlotRequestValidator
             valid = false;
         }
         
-        // Business Rule 9: Slot code validation based on time
-        if (request.slotCode() != null && request.startTime() != null) {
-            if (!isValidSlotCodeForTime(request.slotCode(), request.startTime())) {
-                addViolation(context, 
-                    String.format("Slot code '%s' is not valid for this time", request.slotCode()),
-                    "slotCode");
-                valid = false;
-            }
-        }
-        
         return valid;
     }
     
@@ -90,17 +79,6 @@ public class TimeSlotRequestValidator
         LocalTime closing = LocalTime.of(22, 0);  // 10:00 PM
         
         return !start.isBefore(opening) && !end.isAfter(closing);
-    }
-    
-    private boolean isValidSlotCodeForTime(SlotCode slotCode, LocalTime time) {
-        // Example: Morning slots should have AM codes, evening slots PM codes
-        if (slotCode.name().contains("AM") && time.isAfter(LocalTime.NOON)) {
-            return false;
-        }
-        if (slotCode.name().contains("PM") && time.isBefore(LocalTime.NOON)) {
-            return false;
-        }
-        return true;
     }
     
     private void addViolation(ConstraintValidatorContext context, String message, String property) {

@@ -5,6 +5,7 @@
 package Dtos;
 
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -16,5 +17,11 @@ public record PatientDto(
     String gender,
     LocalDate dateOfBirth,
     String phone,
-    String address
+    String address,
+    
+    // Audit fields (same order as AppointmentDto)
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}

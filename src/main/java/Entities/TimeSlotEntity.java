@@ -5,7 +5,6 @@
 package Entities;
 
 
-import Enums.SlotCode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,7 +16,16 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalTime;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(
     name = "time_slot",
@@ -28,10 +36,6 @@ public class TimeSlotEntity extends BaseEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "day_schedule_id")
     private DayScheduleEntity daySchedule;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "slot_code", nullable = false)
-    private SlotCode slotCode;
 
     @Column(nullable = false)
     private LocalTime startTime;

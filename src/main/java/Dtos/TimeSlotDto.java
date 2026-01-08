@@ -4,15 +4,21 @@
  */
 package Dtos;
 
-import Enums.SlotCode;
+
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.UUID;
 
 public record TimeSlotDto(
         UUID id,
-        SlotCode slotCode,
         LocalTime startTime,
         LocalTime endTime,
         int maxReservations,
-        int availableReservations
+        int availableReservations,
+        
+        // Audit fields (same order as AppointmentDto)
+        UserDto createdBy,
+        Instant createdAt,
+        UserDto updatedBy,
+        Instant updatedAt
 ) {}

@@ -6,7 +6,6 @@ package Requests;
 
 import Validators.annotations.ValidExceptionSlotRequest;
 import Validators.annotations.ValidMaxReservations;
-import Validators.annotations.ValidSlotCode;
 import Validators.annotations.ValidTime;
 import java.time.LocalTime;
 
@@ -21,9 +20,6 @@ public record CreateExceptionSlotRequest(
     LocalTime endTime,
     
     @ValidMaxReservations
-    int maxReservations,
-    
-    @ValidSlotCode
-    String slotCode
+    int maxReservations
     
 ) {}

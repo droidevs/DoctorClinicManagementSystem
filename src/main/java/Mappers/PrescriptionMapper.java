@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author admin
  */
-@Mapper(uses = {AppointmentMapper.class})
+@Mapper(uses = {AppointmentMapper.class, UserMapper.class})
 public interface PrescriptionMapper {
     
     PrescriptionMapper INSTANCE = Mappers.getMapper(PrescriptionMapper.class);

@@ -11,14 +11,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        
-        <jjwt.version>0.12.5</jjwt.version>  <!-- Use 0.11.5 for Java 8 -->
+        <jjwt.version>0.12.5</jjwt.version>
         <bcrypt.version>0.10.2</bcrypt.version>
-        <!-- JSON Processing -->
         <jsonb.version>3.0.0</jsonb.version>
         <jackson.version>2.15.3</jackson.version>
-        
         <slf4j.version>2.0.9</slf4j.version>
+        <hibernate.version>6.4.1.Final</hibernate.version>
+        <antlr.version>4.13.0</antlr.version>
     </properties>
     
     <dependencies>
@@ -29,11 +28,12 @@
             <scope>provided</scope>
         </dependency>
         
+        <!-- LOMBOK - Change scope to "compile" or remove scope -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
-            <scope>provided</scope>
+            <!-- Remove or change to compile scope -->
         </dependency>
         
         <dependency>
@@ -42,14 +42,9 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>provided</scope>
-        </dependency>
+        <!-- Remove mapstruct-processor from dependencies, it goes in annotationProcessorPaths -->
         
-        <!-- JJWT (Java JWT) - Recommended -->
+        <!-- JJWT (Java JWT) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -61,19 +56,17 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-        
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>  <!-- For JSON parsing -->
+            <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
         
-        
         <dependency>
             <groupId>at.favre.lib</groupId>
             <artifactId>bcrypt</artifactId>
-            <version>0.10.2</version>
+            <version>${bcrypt.version}</version>
         </dependency>
         
         <dependency>
@@ -81,7 +74,27 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
+        
+        <!-- Database driver (ADD THIS - You're missing it!) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+    
+        <!-- Remove hibernate-jpamodelgen or keep it but fix annotationProcessorPaths -->
+        
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>${antlr.version}</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -89,10 +102,51 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version> <!-- Update version -->
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                    <annotationProcessorPaths>
+                        <!-- LOMBOK MUST BE FIRST -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
+                        </path>
+                        
+                        <!-- MapStruct binding for Lombok compatibility -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                        
+                        <!-- MapStruct Processor -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        
+                        <!-- Hibernate JPA Metamodel Generator -->
+                        <path>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${hibernate.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    
+                    <!-- Critical for Lombok in Java 17+ -->
+                    <compilerArgs>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

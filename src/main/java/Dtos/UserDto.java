@@ -5,12 +5,19 @@
 package Dtos;
 
 import Enums.Role;
+import java.time.Instant;
 import java.util.UUID;
 
 public record UserDto(
     UUID id,
     String email,
-    Role role,
-    boolean enabled
+    RoleDto role,
+    boolean enabled,
+    
+    // Audit fields (same order as AppointmentDto)
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}
 

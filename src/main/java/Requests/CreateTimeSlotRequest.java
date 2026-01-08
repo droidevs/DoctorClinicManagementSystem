@@ -4,10 +4,8 @@
  */
 package Requests;
 
-import Enums.SlotCode;
 import Validators.annotations.ValidMaxReservations;
 import Validators.annotations.ValidOrderIndex;
-import Validators.annotations.ValidSlotCode;
 import Validators.annotations.ValidTime;
 import Validators.annotations.ValidTimeSlotRequest;
 import Validators.annotations.ValidUUID;
@@ -21,9 +19,6 @@ public record CreateTimeSlotRequest(
     
     @ValidUUID
     UUID dayScheduleId,
-    
-    @ValidSlotCode
-    SlotCode slotCode,
     
     @ValidTime
     LocalTime startTime,

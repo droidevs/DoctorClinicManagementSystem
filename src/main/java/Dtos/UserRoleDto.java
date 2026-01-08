@@ -4,10 +4,17 @@
  */
 package Dtos;
 
+import java.time.Instant;
 import java.util.Set;
 
 public record UserRoleDto(
         Long roleId,
         String roleName,
-        Set<String> permissions
+        Set<String> permissions,
+        
+        // Audit fields (same order as AppointmentDto)
+        UserDto createdBy,
+        Instant createdAt,
+        UserDto updatedBy,
+        Instant updatedAt
 ) {}

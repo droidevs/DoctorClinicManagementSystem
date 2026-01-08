@@ -4,6 +4,7 @@
  */
 package Dtos;
 
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -17,6 +18,12 @@ public record PrescriptionDto(
     String medicineName,
     String dosage,
     String frequency,
-    String instructions
+    String instructions,
+    
+    // Audit fields (same order as AppointmentDto)
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}
 

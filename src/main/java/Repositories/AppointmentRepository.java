@@ -32,9 +32,9 @@ public interface AppointmentRepository {
             AppointmentStatus status
     );
 
-    boolean existsByDoctorIdAndDatetime(
+    boolean existsByDoctorIdAndDate(
             UUID doctorId,
-            LocalDateTime appointmentDatetime
+            LocalDate appointmentDate
     );
 
     void delete(AppointmentEntity appointment);

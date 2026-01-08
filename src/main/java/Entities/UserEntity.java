@@ -45,5 +45,6 @@ public class UserEntity extends BaseEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity role;
     
+    @Builder.Default
     private boolean enabled = true;
 }

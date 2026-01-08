@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,12 +41,12 @@ public class AppointmentEntity extends BaseEntity {
     private DoctorEntity doctor;
     
     @Column(name = "date_time")
-    private LocalDateTime appointmentDatetime;
+    private LocalDate appointmentDate;
     
     /** Normal booking */
     @ManyToOne
     @JoinColumn(name = "time_slot_id")
-    private TimeSlotEntity timeSlot;
+    private TimeSlotEntity slot;
 
     /** Exception booking */
     @ManyToOne

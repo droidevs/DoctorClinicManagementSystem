@@ -6,6 +6,7 @@ package Dtos;
 
 import Enums.ExceptionRecurrence;
 import Enums.ExceptionType;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -16,6 +17,12 @@ public record ScheduleExceptionDto(
         LocalDate exceptionDate,
         Integer exceptionDay,
         Integer exceptionMonth,
-        String reason
+        String reason,
+        
+        // Audit fields (same order as AppointmentDto)
+        UserDto createdBy,
+        Instant createdAt,
+        UserDto updatedBy,
+        Instant updatedAt
 ) {}
 

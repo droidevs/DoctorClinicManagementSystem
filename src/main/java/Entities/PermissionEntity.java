@@ -16,11 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "permissions")
 @Getter @Setter
-public class PermissionEntity {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class PermissionEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String code;

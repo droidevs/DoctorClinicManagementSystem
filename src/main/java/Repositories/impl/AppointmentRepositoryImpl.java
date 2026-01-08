@@ -111,18 +111,18 @@ public class AppointmentRepositoryImpl
      * ------------------------- */
 
     @Override
-    public boolean existsByDoctorIdAndDatetime(
+    public boolean existsByDoctorIdAndDate(
             UUID doctorId,
-            LocalDateTime appointmentDatetime) {
+            LocalDate appointmentDate) {
 
         Long count = em.createQuery("""
                 SELECT COUNT(a)
                 FROM AppointmentEntity a
                 WHERE a.doctor.id = :doctorId
-                  AND a.appointmentDatetime = :datetime
+                  AND a.appointmentDate = :date
                 """, Long.class)
                 .setParameter("doctorId", doctorId)
-                .setParameter("datetime", appointmentDatetime)
+                .setParameter("date", appointmentDate)
                 .getSingleResult();
 
         return count > 0;

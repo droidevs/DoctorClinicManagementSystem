@@ -4,6 +4,7 @@
  */
 package Dtos;
 
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -12,5 +13,11 @@ import java.util.UUID;
  */
 public record SpecialisationDto(
     UUID id,
-    String name
+    String name,
+    
+    // Audit fields (same order as AppointmentDto)
+    UserDto createdBy,
+    Instant createdAt,
+    UserDto updatedBy,
+    Instant updatedAt
 ) {}

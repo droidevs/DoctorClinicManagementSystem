@@ -4,6 +4,8 @@
  */
 package Entities;
 
+import Loggings.business.action.BusinessAction;
+import Loggings.business.resource.ResourceType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -25,11 +27,7 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "audit_logs")
-public class AuditLog {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class AuditLog extends BaseEntity{
 
     private UUID userId;
 
@@ -42,7 +40,7 @@ public class AuditLog {
     private Loggings.business.action.BusinessAction action;
 
     @Enumerated(EnumType.STRING)
-    private Loggings.business.resource.ResourceType resourceType;
+    private ResourceType resourceType;
 
     private UUID resourceId;
 
@@ -55,21 +53,29 @@ public class AuditLog {
     @Column(name = "value")
     private Map<String, String> metadata;
 
-    private Instant timestamp;
-
-    public AuditLog() {}
-
-    public AuditLog(UUID userId, Set<String> roles, Loggings.business.action.BusinessAction action,
-                    Loggings.business.resource.ResourceType resourceType, UUID resourceId,
-                    String description, Map<String, String> metadata, Instant timestamp) {
+    @Builder
+    public AuditLog(
+        UUID userId,
+        Set<String> userRoles,
+        BusinessAction action,
+        ResourceType resourceType,
+        UUID resourceId,
+        String description,
+        Map<String, String> details,
+        Instant timestamp
+    ) {
+        // If you need to set BaseEntity fields, do it here
         this.userId = userId;
-        this.roles = roles;
+        this.roles = userRoles;
         this.action = action;
         this.resourceType = resourceType;
         this.resourceId = resourceId;
         this.description = description;
-        this.metadata = metadata;
-        this.timestamp = timestamp;
+        this.metadata = details;
+        this.createdAt = timestamp;
     }
+    
+    
+    
 
 }
