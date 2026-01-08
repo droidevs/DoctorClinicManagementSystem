@@ -5,12 +5,21 @@
 package Repositories;
 
 import Entities.PaymentEntity;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 public interface PaymentRepository {
 
+    PaymentEntity save(PaymentEntity payment);
+
+    Optional<PaymentEntity> findById(UUID id);
+
     Optional<PaymentEntity> findByBillId(UUID billId);
-    
+
+    List<PaymentEntity> findByReceivedBy(UUID secretaryId);
+
+    boolean existsByBillId(UUID billId);
 }
+

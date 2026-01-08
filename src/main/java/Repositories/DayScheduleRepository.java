@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.DayScheduleEntity;
+import Enums.Day;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public interface DayScheduleRepository {
 
     Optional<DayScheduleEntity> findByWeeklyScheduleAndDay(
             UUID weeklyScheduleId,
-            int dayOfWeek
+            Day day
     );
 
     List<DayScheduleEntity> findByWeeklySchedule(UUID weeklyScheduleId);

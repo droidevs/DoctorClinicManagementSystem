@@ -4,11 +4,18 @@
  */
 package Requests;
 
+import jakarta.validation.constraints.NotNull;
+import java.util.UUID;
+
 /**
  *
  * @author admin
  */
 public record PaymentRequest(
+        
+        @NotNull(message = "Bill ID is required")
+        UUID billId,
+        
         String paymentMethod
         ) {
 

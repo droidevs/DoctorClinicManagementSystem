@@ -24,4 +24,6 @@ public interface DoctorRepository {
     List<DoctorEntity> findBySpecialisationId(UUID specialisationId);
 
     void delete(DoctorEntity doctor);
+    
+    void deleteById(UUID doctorId);
 }

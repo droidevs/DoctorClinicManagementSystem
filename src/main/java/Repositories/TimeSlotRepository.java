@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
-
 public interface TimeSlotRepository {
 
     Optional<TimeSlotEntity> findById(UUID id);
