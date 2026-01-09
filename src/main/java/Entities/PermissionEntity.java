@@ -8,6 +8,7 @@ import Listeners.AuditListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
 @Entity
@@ -23,6 +24,7 @@ import lombok.Setter;
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
+@SuperBuilder
 public class PermissionEntity extends BaseEntity {
 
     @Column(name = "code", nullable = false, length = 100)

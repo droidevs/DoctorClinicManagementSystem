@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Formula;
 
 @Entity
@@ -33,7 +34,7 @@ import org.hibernate.annotations.Formula;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class TimeSlotEntity extends BaseEntity {
 
     /* ===== RELATION ===== */

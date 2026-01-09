@@ -30,8 +30,6 @@ import lombok.*;
 @EntityListeners(AuditListener.class)
 public class MedicationEntity extends BaseEntity {
 
-    /* ===== IDENTIFIERS ===== */
-
     @Column(name = "drug_code", nullable = false, unique = true, length = 50)
     private String drugCode;  // RxNorm, NDC, etc.
 
