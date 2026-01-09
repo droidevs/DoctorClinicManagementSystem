@@ -14,16 +14,19 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 public record AppointmentDto(
-    UUID id,
-    PatientDto patient,
-    DoctorDto doctor,
-    LocalDate appointmentDate,
-    TimeSlotDto slot,
-    TimeSlotDto exceptionSlot,
-    AppointmentStatus status,
-    String reason,
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+
+        PatientDto patient,
+        DoctorDto doctor,
+
+        LocalDate appointmentDate,
+
+        TimeSlotDto slot,
+        TimeSlotDto exceptionSlot,
+
+        AppointmentStatus status,
+        String reason,
+
+        AuditDto audit
 ) {}
+

@@ -7,18 +7,40 @@ package Mappers;
 import Dtos.AppointmentDto;
 import Entities.AppointmentEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-/**
- *
- * @author admin
- */
-@Mapper(uses = {PatientMapper.class, DoctorMapper.class, UserMapper.class})
+
+@Mapper(
+        componentModel = "jakarta",
+        uses = {
+                AuditMapper.class,
+                PatientMapper.class,
+                DoctorMapper.class,
+                TimeSlotMapper.class
+        }
+)
 public interface AppointmentMapper {
-    
-    AppointmentMapper INSTANCE = Mappers.getMapper(AppointmentMapper.class);
-    
-    AppointmentDto toDto(AppointmentEntity appointment);
-    
+
+    /* ========================
+       Entity → DTO
+       ======================== */
+
+    @Mapping(source = ".", target = "audit")
+    AppointmentDto toDto(AppointmentEntity entity);
+
+    /* ========================
+       DTO → Entity
+       ======================== */
+
+    @Mapping(target = "patient", ignore = true)
+    @Mapping(target = "doctor", ignore = true)
+    @Mapping(target = "slot", ignore = true)
+    @Mapping(target = "exceptionSlot", ignore = true)
+    // audit (system-managed)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     AppointmentEntity toEntity(AppointmentDto dto);
 }
+
