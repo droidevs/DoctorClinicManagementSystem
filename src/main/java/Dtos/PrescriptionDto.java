@@ -4,26 +4,31 @@
  */
 package Dtos;
 
+import Requests.DosageRequest;
+import Requests.FrequencyRequest;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
-/**
- *
- * @author admin
- */
+
+import java.time.Instant;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.UUID;
 
 public record PrescriptionDto(
-    UUID id,
-    AppointmentDto appointment,
-    String medicineName,
-    String dosage,
-    String frequency,
-    String instructions,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        UUID appointmentId,
+        MedicationDto medication,
+        DosageDto dosage,
+        FrequencyDto frequency,
+        String instructions,
+        Integer durationDays,
+        Integer refillsAllowed,
+        List<PrescriptionEditDto> editHistory,
+
+        // Audit grouped in AuditDto
+        AuditDto audit
 ) {}
+
 

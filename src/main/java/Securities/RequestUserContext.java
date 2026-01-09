@@ -11,12 +11,17 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.SecurityContext;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+@Getter
+@Setter
 @RequestScoped
 public class RequestUserContext {
 
