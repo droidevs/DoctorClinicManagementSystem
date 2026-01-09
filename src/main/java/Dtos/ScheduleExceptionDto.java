@@ -12,17 +12,18 @@ import java.util.UUID;
 
 public record ScheduleExceptionDto(
         UUID id,
+
+        UUID doctorId,
+
         ExceptionType exceptionType,
         ExceptionRecurrence recurrence,
+
         LocalDate exceptionDate,
         Integer exceptionDay,
         Integer exceptionMonth,
+
         String reason,
-        
-        // Audit fields (same order as AppointmentDto)
-        UserDto createdBy,
-        Instant createdAt,
-        UserDto updatedBy,
-        Instant updatedAt
+
+        AuditDto audit
 ) {}
 
