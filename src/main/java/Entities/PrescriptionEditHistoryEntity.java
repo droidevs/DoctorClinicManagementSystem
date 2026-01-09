@@ -5,6 +5,7 @@
 package Entities;
 
 import Entities.embeded.PrescriptionSnapshot;
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ import lombok.*;
                 @Index(name = "idx_presc_edit_notify", columnList = "requires_patient_notification")
         }
 )
+@EntityListeners(AuditListener.class)
 public class PrescriptionEditHistoryEntity extends BaseEntity {
 
     /* ===== RELATION ===== */

@@ -5,6 +5,7 @@
 package Entities;
 
 import Enums.BillStatus;
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -34,6 +35,7 @@ import lombok.Setter;
                 @Index(name = "idx_bill_paid_at", columnList = "paid_at")
         }
 )
+@EntityListeners(AuditListener.class)
 public class BillEntity extends BaseEntity {
 
     /* ===== RELATION ===== */

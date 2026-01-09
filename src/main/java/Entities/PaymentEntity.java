@@ -5,6 +5,7 @@
 package Entities;
 
 import Enums.PaymentMethod;
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,7 @@ import java.time.Instant;
                 @Index(name = "idx_payment_received_at", columnList = "received_at")
         }
 )
+@EntityListeners(AuditListener.class)
 public class PaymentEntity extends BaseEntity {
 
     /* ===== RELATION ===== */

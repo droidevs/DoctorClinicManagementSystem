@@ -4,14 +4,8 @@
  */
 package Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import Listeners.AuditListener;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +31,7 @@ import lombok.Setter;
         @Index(name = "idx_note_created_at", columnList = "created_at")
     }
 )
+@EntityListeners(AuditListener.class)
 public class AppointmentNoteEntity extends BaseEntity {
 
     /* ===== RELATIONS ===== */

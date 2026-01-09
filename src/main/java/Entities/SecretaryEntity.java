@@ -5,6 +5,7 @@
 package Entities;
 
 import Enums.SecretaryStatus;
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ import lombok.Setter;
                 @Index(name = "idx_secretary_status", columnList = "status")
         }
 )
+@EntityListeners(AuditListener.class)
 public class SecretaryEntity extends BaseEntity {
 
     /* ===== RELATION ===== */

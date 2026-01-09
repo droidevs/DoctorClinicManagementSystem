@@ -5,17 +5,9 @@
 package Entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import Listeners.AuditListener;
+import jakarta.persistence.*;
+
 import java.time.LocalTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -38,6 +30,7 @@ import lombok.Setter;
         @Index(name = "idx_time_slot_start_time", columnList = "start_time")
     }
 )
+@EntityListeners(AuditListener.class)
 @Getter
 @Setter
 @NoArgsConstructor

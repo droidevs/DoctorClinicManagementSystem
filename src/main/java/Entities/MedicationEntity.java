@@ -4,6 +4,7 @@
  */
 package Entities;
 
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -26,6 +27,7 @@ import lombok.*;
                 @Index(name = "idx_medication_category", columnList = "category_id")
         }
 )
+@EntityListeners(AuditListener.class)
 public class MedicationEntity extends BaseEntity {
 
     /* ===== IDENTIFIERS ===== */

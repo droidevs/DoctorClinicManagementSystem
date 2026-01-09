@@ -5,6 +5,7 @@
 package Entities;
 
 
+import Listeners.AuditListener;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ import java.util.Set;
                 @Index(name = "idx_medicine_category_active", columnList = "is_active")
         }
 )
+@EntityListeners(AuditListener.class)
 public class MedicineCategoryEntity extends BaseEntity {
 
     /* ===== BUSINESS IDENTIFIER ===== */

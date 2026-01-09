@@ -4,6 +4,7 @@
  */
 package Entities;
 
+import Listeners.AuditListener;
 import Loggings.business.action.BusinessAction;
 import Loggings.business.resource.ResourceType;
 import jakarta.persistence.Entity;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "audit_logs")
+@EntityListeners(AuditListener.class)
 public class AuditLog extends BaseEntity{
 
     private UUID userId;

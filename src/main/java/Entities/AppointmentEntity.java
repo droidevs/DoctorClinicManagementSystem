@@ -5,17 +5,9 @@
 package Entities;
 
 import Enums.AppointmentStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
+import Listeners.AuditListener;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -38,6 +30,7 @@ import lombok.Setter;
         @Index(name = "idx_appointment_status", columnList = "status")
     }
 )
+@EntityListeners(AuditListener.class)
 @Getter
 @Setter
 @NoArgsConstructor

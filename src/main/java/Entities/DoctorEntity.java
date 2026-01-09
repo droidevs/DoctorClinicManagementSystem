@@ -4,16 +4,9 @@
  */
 package Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import Listeners.AuditListener;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -37,6 +30,7 @@ import lombok.Setter;
         @UniqueConstraint(name = "uk_doctor_user", columnNames = "user_id")
     }
 )
+@EntityListeners(AuditListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
