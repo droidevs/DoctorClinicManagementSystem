@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(
-        componentModel = "spring",
+        componentModel = "jakarta",
         uses = {AuditMapper.class, MedicineCategoryMapper.class}
 )
 public interface MedicationMapper {

@@ -18,7 +18,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(
-        componentModel = "spring",
+        componentModel = "jakarta",
         uses = {
                 DosageMapper.class,
                 FrequencyMapper.class,

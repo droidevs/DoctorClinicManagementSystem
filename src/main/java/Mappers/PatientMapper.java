@@ -16,7 +16,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring", uses = {AuditMapper.class, UserMapper.class})
+@Mapper(componentModel = "jakarta", uses = {AuditMapper.class, UserMapper.class})
 public interface PatientMapper {
 
     // ------------------------

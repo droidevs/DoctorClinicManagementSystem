@@ -43,6 +43,9 @@ public class MedicationEntity extends BaseEntity {
     @Column(name = "drug_class", length = 100)
     private String drugClass;
 
+    @Column(name = "active")
+    private Boolean active;
+
     /* ===== CATEGORY ===== */
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

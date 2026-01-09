@@ -14,7 +14,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(
-        componentModel = "spring",
+        componentModel = "jakarta",
         uses = {PrescriptionSnapshotMapper.class, AuditMapper.class}
 )
 public interface PrescriptionEditHistoryMapper {
