@@ -9,17 +9,11 @@ import java.util.Set;
 import java.util.UUID;
 
 public record DoctorDto(
-    UUID id,
-    UserDto user,
-    String firstName,
-    String lastName,
-    String gender,
-    Set<SpecialisationDto> specialisations,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        UserDto user,
+        String firstName,
+        String lastName,
+        String gender,
+        Set<SpecialisationDto> specialisations,
+        AuditDto audit // contains createdBy, createdAt, updatedBy, updatedAt
 ) {}
-

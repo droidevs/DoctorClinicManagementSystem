@@ -16,18 +16,36 @@ import org.mapstruct.factory.Mappers;
  *
  * @author admin
  */
-@Mapper(uses = {UserMapper.class})
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
+@Mapper(componentModel = "jakarta", uses = {AuditMapper.class, UserMapper.class, SpecialisationMapper.class})
 public interface DoctorMapper {
-    
-    DoctorMapper INSTANCE = Mappers.getMapper(DoctorMapper.class);
-    
-    
-    DoctorDto toDto(DoctorEntity doctor);
+
+    // ------------------------
+    // Entity → DTO
+    // ------------------------
+    @Mapping(source = ".", target = "audit") // Map BaseEntity audit fields to AuditDto
+    DoctorDto toDto(DoctorEntity entity);
+
+    // ------------------------
+    // DTO → Entity
+    // ------------------------
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     DoctorEntity toEntity(DoctorDto dto);
 
-    SpecialisationDto toDto(SpecialisationEntity specialisation);
-    SpecialisationEntity toEntity(SpecialisationDto dto);
-    Set<SpecialisationDto> toDtoSet(Set<SpecialisationEntity> specialisations);
-    Set<SpecialisationEntity> toEntitySet(Set<SpecialisationDto> dtos);
+    // ------------------------
+    // Update existing entity from DTO (ignoring audit)
+    // ------------------------
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateEntityFromDto(DoctorDto dto, @MappingTarget DoctorEntity entity);
 }
+
 
