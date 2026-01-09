@@ -10,11 +10,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalTime;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(
@@ -53,5 +51,15 @@ public class TimeSlotEntity extends BaseEntity {
     /* ===== CAPACITY ===== */
     @Column(name = "max_reservations", nullable = false)
     private int maxReservations;
+
+    @Formula("""
+        (SELECT max_reservations - COALESCE(
+            (SELECT COUNT(*) FROM appointments a 
+             WHERE a.time_slot_id = id 
+               AND a.status NOT IN ('CANCELLED', 'NO_SHOW')), 0)
+        )
+    """)
+    @Setter(AccessLevel.NONE)
+    private int availableReservations;
 }
 

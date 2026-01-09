@@ -27,10 +27,7 @@ public record CreateTimeSlotRequest(
     LocalTime endTime,
     
     @ValidMaxReservations
-    int maxReservations,
-    
-    @ValidOrderIndex
-    int orderIndex
+    int maxReservations
     
 ) {}
 
