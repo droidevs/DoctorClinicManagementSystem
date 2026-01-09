@@ -24,14 +24,5 @@ public interface DayScheduleMapper {
     @Mapping(source = "timeSlots", target = "slots")
     DayScheduleDto toDto(DayScheduleEntity entity);
 
-    /* ========================
-       DTO → Entity
-       ======================== */
 
-    @Mapping(target = "weeklySchedule", ignore = true)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    DayScheduleEntity toEntity(DayScheduleDto dto);
 }

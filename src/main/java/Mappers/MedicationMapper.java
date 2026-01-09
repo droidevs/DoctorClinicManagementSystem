@@ -16,10 +16,4 @@ public interface MedicationMapper {
     @Mapping(source = ".", target = "audit") // Maps BaseEntity audit fields to AuditDto
     MedicationDto toDto(MedicationEntity entity);
 
-    // Optional: if you want DTO → Entity mapping (ignoring audit fields)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    MedicationEntity toEntity(MedicationDto dto);
 }

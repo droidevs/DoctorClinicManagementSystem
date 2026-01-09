@@ -4,7 +4,9 @@
  */
 package Mappers;
 
+import Dtos.MedicationDto;
 import Dtos.MedicineCategoryDto;
+import Entities.MedicationEntity;
 import Entities.MedicineCategoryEntity;
 import org.mapstruct.Mapper;
 
@@ -21,11 +23,4 @@ public interface MedicineCategoryMapper {
     @Mapping(source = ".", target = "audit") // Use BaseEntity → AuditDto
     MedicineCategoryDto toDto(MedicineCategoryEntity entity);
 
-
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "medicines", ignore = true) // avoid mapping related entities
-    void updateEntityFromDto(MedicineCategoryDto dto, @MappingTarget MedicineCategoryEntity entity);
 }

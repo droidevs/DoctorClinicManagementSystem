@@ -29,19 +29,6 @@ public interface AppointmentMapper {
     @Mapping(source = ".", target = "audit")
     AppointmentDto toDto(AppointmentEntity entity);
 
-    /* ========================
-       DTO → Entity
-       ======================== */
 
-    @Mapping(target = "patient", ignore = true)
-    @Mapping(target = "doctor", ignore = true)
-    @Mapping(target = "slot", ignore = true)
-    @Mapping(target = "exceptionSlot", ignore = true)
-    // audit (system-managed)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    AppointmentEntity toEntity(AppointmentDto dto);
 }
 

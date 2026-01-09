@@ -23,23 +23,6 @@ public interface UserMapper {
     @Mapping(source = ".", target = "audit") // Map all audit fields into AuditDto
     UserDto toDto(UserEntity entity);
 
-    // ------------------------
-    // DTO → Entity
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    UserEntity toEntity(UserDto dto);
-
-    // ------------------------
-    // Update existing entity from DTO (ignoring audit)
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(UserDto dto, @MappingTarget UserEntity entity);
 }
 
 

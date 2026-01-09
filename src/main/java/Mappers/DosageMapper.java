@@ -19,7 +19,5 @@ public interface DosageMapper {
 
     DosageDto toDto(Dosage dosage);
 
-
-    Dosage toEntity(DosageDto dto);
 }
 

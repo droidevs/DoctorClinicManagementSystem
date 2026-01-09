@@ -18,9 +18,5 @@ public interface FrequencyMapper {
        ======================== */
     FrequencyDto toDto(Frequency frequency);
 
-    /* ========================
-       DTO → Entity
-       ======================== */
-    Frequency toEntity(FrequencyDto dto);
 }
 

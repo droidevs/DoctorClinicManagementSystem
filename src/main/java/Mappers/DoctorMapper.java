@@ -29,23 +29,7 @@ public interface DoctorMapper {
     @Mapping(source = ".", target = "audit") // Map BaseEntity audit fields to AuditDto
     DoctorDto toDto(DoctorEntity entity);
 
-    // ------------------------
-    // DTO → Entity
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    DoctorEntity toEntity(DoctorDto dto);
 
-    // ------------------------
-    // Update existing entity from DTO (ignoring audit)
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(DoctorDto dto, @MappingTarget DoctorEntity entity);
 }
 
 

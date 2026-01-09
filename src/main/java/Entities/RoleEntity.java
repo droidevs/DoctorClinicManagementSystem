@@ -10,9 +10,7 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
@@ -20,6 +18,7 @@ import lombok.experimental.SuperBuilder;
  *
  * @author admin
  */
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(
     name = "roles",
@@ -33,6 +32,8 @@ import lombok.experimental.SuperBuilder;
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 public class RoleEntity extends BaseEntity {
 

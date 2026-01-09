@@ -28,24 +28,4 @@ public interface BillMapper {
     @Mapping(source = ".", target = "audit")
     BillDto toDto(BillEntity entity);
 
-    // ------------------------
-    // DTO → Entity
-    // ------------------------
-    // Audit is ignored (handled by AuditListener)
-
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    BillEntity toEntity(BillDto dto);
-
-    // ------------------------
-    // Update existing entity
-    // ------------------------
-
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(BillDto dto, @MappingTarget BillEntity entity);
 }

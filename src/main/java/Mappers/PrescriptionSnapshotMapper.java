@@ -17,9 +17,5 @@ public interface PrescriptionSnapshotMapper {
     @Mapping(source = "frequency", target = "frequency") // Will use FrequencyMapper
     PrescriptionSnapshotDto toDto(PrescriptionSnapshot snapshot);
 
-    // DTO → Entity
-    @Mapping(source = "dosage", target = "dosage")       // Will use DosageMapper
-    @Mapping(source = "frequency", target = "frequency") // Will use FrequencyMapper
-    PrescriptionSnapshot toEntity(PrescriptionSnapshotDto dto);
 }
 

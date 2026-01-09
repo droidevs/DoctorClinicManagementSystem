@@ -40,20 +40,5 @@ public interface PrescriptionMapper {
     @Mapping(source = "appointment.id", target = "appointmentId")
     PrescriptionDto toDto(PrescriptionEntity entity);
 
-    // ------------------------
-    // DTO → Entity
-    // ------------------------
-    @Mapping(target = "id", ignore = true)                  // handled by JPA
-    @Mapping(target = "appointment", ignore = true)        // set in service layer
-    @Mapping(source = "dosage", target = "dosage")
-    @Mapping(source = "frequency", target = "frequency")
-    @Mapping(source = "medication", target = "medication")
-    @Mapping(target = "specificTimes", ignore = true)      // handled manually
-    @Mapping(target = "editHistory", ignore = true)        // handled manually
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    PrescriptionEntity toEntity(PrescriptionDto dto);
 }
 

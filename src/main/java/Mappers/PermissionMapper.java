@@ -7,9 +7,11 @@ package Mappers;
 
 
 import Dtos.PermissionDto;
+import Dtos.RoleDto;
 import Entities.PermissionEntity;
 import java.util.Set;
 
+import Entities.RoleEntity;
 import jakarta.persistence.EntityListeners;
 import org.mapstruct.*;
 
@@ -22,6 +24,4 @@ public interface PermissionMapper {
     @Mapping(source = ".", target = "audit")
     // Map audit fields from BaseEntity
     PermissionDto toDto(PermissionEntity entity);
-
-
 }

@@ -24,21 +24,4 @@ public interface RoleMapper {
     @Mapping(source = ".", target = "audit") // Map all audit fields into AuditDto
     RoleDto toDto(RoleEntity entity);
 
-    // ------------------------
-    // DTO → Entity
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    RoleEntity toEntity(RoleDto dto);
-
-    // ------------------------
-    // Update existing entity from DTO (ignoring audit)
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(RoleDto dto, @MappingTarget RoleEntity entity);
 }

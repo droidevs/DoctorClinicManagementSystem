@@ -15,7 +15,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses = {AuditMapper.class})
+@Mapper(componentModel = "jakarta", uses = {AuditMapper.class})
 public interface ExceptionTimeSlotMapper {
 
     // Entity → DTO
@@ -25,14 +25,5 @@ public interface ExceptionTimeSlotMapper {
     })
     ExceptionTimeSlotDto toDto(ExceptionTimeSlotEntity entity);
 
-    // DTO → Entity
-    @Mappings({
-            @Mapping(source = "exceptionId", target = "exception.id"),
-            @Mapping(target = "id", ignore = true),      // JPA-managed
-            @Mapping(target = "createdBy", ignore = true),
-            @Mapping(target = "createdAt", ignore = true),
-            @Mapping(target = "updatedBy", ignore = true),
-            @Mapping(target = "updatedAt", ignore = true)
-    })
-    ExceptionTimeSlotEntity toEntity(ExceptionTimeSlotDto dto);
+
 }

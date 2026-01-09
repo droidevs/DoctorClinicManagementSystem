@@ -15,22 +15,5 @@ public interface SecretaryMapper {
     @Mapping(source = ".", target = "audit") // map all BaseEntity audit fields
     SecretaryDto toDto(SecretaryEntity entity);
 
-    // ------------------------
-    // DTO → Entity (ignore audit)
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    SecretaryEntity toEntity(SecretaryDto dto);
-
-    // ------------------------
-    // Update existing entity from DTO (ignore audit)
-    // ------------------------
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(SecretaryDto dto, @MappingTarget SecretaryEntity entity);
 }
 
