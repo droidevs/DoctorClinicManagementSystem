@@ -12,12 +12,7 @@ import java.util.UUID;
  * @author admin
  */
 public record SpecialisationDto(
-    UUID id,
-    String name,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        String name,
+        AuditDto audit // Contains createdBy, createdAt, updatedBy, updatedAt
 ) {}

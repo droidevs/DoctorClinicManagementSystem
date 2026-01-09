@@ -1,27 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Mappers;
 
-import Dtos.UserDto;
-import Entities.UserEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
-
+import Dtos.SpecialisationDto;
+import Entities.SpecialisationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "jakarta", uses = {AuditMapper.class, RoleMapper.class})
-public interface UserMapper {
+@Mapper(componentModel = "spring", uses = {AuditMapper.class})
+public interface SpecialisationMapper {
 
     // ------------------------
     // Entity → DTO
     // ------------------------
-    @Mapping(source = ".", target = "audit") // Map all audit fields into AuditDto
-    UserDto toDto(UserEntity entity);
+    @Mapping(source = ".", target = "audit") // Map all BaseEntity audit fields
+    SpecialisationDto toDto(SpecialisationEntity entity);
 
     // ------------------------
     // DTO → Entity
@@ -30,7 +22,7 @@ public interface UserMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    UserEntity toEntity(UserDto dto);
+    SpecialisationEntity toEntity(SpecialisationDto dto);
 
     // ------------------------
     // Update existing entity from DTO (ignoring audit)
@@ -39,7 +31,6 @@ public interface UserMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    void updateEntityFromDto(UserDto dto, @MappingTarget UserEntity entity);
+    void updateEntityFromDto(SpecialisationDto dto, @MappingTarget SpecialisationEntity entity);
 }
-
 
