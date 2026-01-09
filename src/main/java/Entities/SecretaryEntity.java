@@ -5,14 +5,7 @@
 package Entities;
 
 import Enums.SecretaryStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,25 +19,38 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "secretaries")
+@Table(
+        name = "secretaries",
+        indexes = {
+                @Index(name = "idx_secretary_user", columnList = "user_id"),
+                @Index(name = "idx_secretary_status", columnList = "status")
+        }
+)
 public class SecretaryEntity extends BaseEntity {
 
+    /* ===== RELATION ===== */
+
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(
+            name = "user_id",
+            nullable = false,
+            unique = true,
+            foreignKey = @ForeignKey(name = "fk_secretary_user")
+    )
     private UserEntity user;
 
+    /* ===== STATUS ===== */
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false, length = 30)
     private SecretaryStatus status;
 
-    /* ---- Permissions (business-level, NOT auth-level) ---- */
+    /* ===== BUSINESS PERMISSIONS (NOT AUTH) ===== */
 
-    @Column(nullable = false)
+    @Column(name = "can_receive_payments", nullable = false)
     private boolean canReceivePayments;
 
-    @Column(nullable = false)
+    @Column(name = "can_verify_identity", nullable = false)
     private boolean canVerifyIdentity;
-
-    @Column(nullable = false)
-    private boolean canMergeAccounts;
 }
+

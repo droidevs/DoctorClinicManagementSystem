@@ -10,29 +10,50 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(
     name = "day_schedule",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"weekly_schedule_id", "day"})
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_day_schedule_weekday", columnNames = {"weekly_schedule_id", "day"})
+    },
+    indexes = {
+        @Index(name = "idx_day_schedule_weekly_schedule", columnList = "weekly_schedule_id"),
+        @Index(name = "idx_day_schedule_day", columnList = "day")
+    }
 )
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DayScheduleEntity extends BaseEntity {
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "weekly_schedule_id")
+    /* ===== RELATION ===== */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "weekly_schedule_id", nullable = false)
     private WeeklyScheduleEntity weeklySchedule;
 
+    /* ===== DAY OF WEEK ===== */
     @Enumerated(EnumType.STRING)
-    @Column(name = "day",nullable = false)
+    @Column(name = "day", nullable = false, length = 10)
     private Day day;
 
+    /* ===== RESERVATION TYPE ===== */
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "reservation_type", nullable = false, length = 20)
     private ReservationType reservationType;
 }

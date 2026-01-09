@@ -6,7 +6,9 @@ package Entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,16 +19,28 @@ import lombok.Setter;
  *
  * @author admin
  */
+@Entity
+@Table(
+    name = "specialisations",
+    indexes = {
+        @Index(name = "idx_specialisation_name", columnList = "name")
+    },
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_specialisation_name", columnNames = "name")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "specialisations")
 public class SpecialisationEntity extends BaseEntity {
-    
-    
-    @Column(name = "name",nullable = false, unique = true)
+
+    @Column(
+        name = "name",
+        nullable = false,
+        length = 150
+    )
     private String name;
 }
+

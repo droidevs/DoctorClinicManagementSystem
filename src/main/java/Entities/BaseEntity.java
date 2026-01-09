@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,22 +34,43 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class BaseEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
     protected UUID id;
-    
+
+    /* ===== AUDIT ===== */
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false, updatable = false)
+    @JoinColumn(name = "created_by", updatable = false)
     protected UserEntity createdBy;
-    
+
     @Column(name = "created_at", nullable = false, updatable = false)
     protected Instant createdAt;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by", nullable = true)
+    @JoinColumn(name = "updated_by")
     protected UserEntity updatedBy;
-    
-    @Column(name = "updated_at", nullable = true)
+
+    @Column(name = "updated_at")
     protected Instant updatedAt;
+
+    /* ===== LIFECYCLE ===== */
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = Instant.now();
+    }
+
+    /* ===== GETTERS ===== */
+
+    public UUID getId() {
+        return id;
+    }
 }

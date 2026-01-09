@@ -9,8 +9,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,40 +28,79 @@ import lombok.Setter;
  *
  * @author admin
  */
+@Entity
+@Table(
+    name = "appointments",
+    indexes = {
+        @Index(name = "idx_appointment_doctor", columnList = "doctor_id"),
+        @Index(name = "idx_appointment_patient", columnList = "patient_id"),
+        @Index(name = "idx_appointment_datetime", columnList = "appointment_datetime"),
+        @Index(name = "idx_appointment_status", columnList = "status")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "appointments")
 public class AppointmentEntity extends BaseEntity {
-    
-    
-    @ManyToOne(optional = false)
+
+    /* ===== RELATIONS ===== */
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
     private PatientEntity patient;
-    
-    @ManyToOne(optional = false)
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
-    
-    @Column(name = "date_time")
+
+    /* ===== TIME ===== */
+
+    @Column(name = "appointment_date", nullable = false)
     private LocalDate appointmentDate;
-    
-    /** Normal booking */
-    @ManyToOne
+
+    /* ===== NORMAL SLOT ===== */
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "time_slot_id")
     private TimeSlotEntity slot;
 
-    /** Exception booking */
-    @ManyToOne
+    /* ===== EXCEPTION SLOT ===== */
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exception_slot_id")
     private ExceptionTimeSlotEntity exceptionSlot;
-    
-    @Column(name = "status")
+
+    /* ===== STATUS ===== */
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
     private AppointmentStatus status;
-    
+
+    /* ===== REASONS ===== */
+
+    @Column(name = "reason", length = 500)
     private String reason;
-    
+
+    @Column(name = "cancel_reason", length = 500)
     private String cancelReason;
+
+    /* ===== VALIDATION ===== */
+
+    @PrePersist
+    @PreUpdate
+    private void validateSlotConsistency() {
+        if (slot != null && exceptionSlot != null) {
+            throw new IllegalStateException(
+                "Appointment cannot have both timeSlot and exceptionSlot"
+            );
+        }
+
+        if (slot == null && exceptionSlot == null) {
+            throw new IllegalStateException(
+                "Appointment must have either timeSlot or exceptionSlot"
+            );
+        }
+    }
 }

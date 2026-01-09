@@ -12,45 +12,83 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "schedule_exception")
+@Table(
+    name = "schedule_exception",
+    indexes = {
+        @Index(name = "idx_exception_doctor", columnList = "doctor_id"),
+        @Index(name = "idx_exception_type", columnList = "exception_type"),
+        @Index(name = "idx_exception_recurrence", columnList = "recurrence")
+    }
+)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ScheduleExceptionEntity extends BaseEntity {
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "doctor_id")
+    /* ===== RELATION ===== */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
 
+    /* ===== RECURRENCE ===== */
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "recurrence", nullable = false, length = 20)
     private ExceptionRecurrence recurrence;
 
-    // ONE_TIME
-    private LocalDate exceptionDate;
+    /* ===== DATE FIELDS ===== */
+    @Column(name = "exception_date")
+    private LocalDate exceptionDate; // ONE_TIME
 
-    // MONTHLY / YEARLY
-    private Integer exceptionDay;
+    @Column(name = "exception_day")
+    private Integer exceptionDay; // MONTHLY / YEARLY
 
-    // YEARLY only
-    private Integer exceptionMonth;
+    @Column(name = "exception_month")
+    private Integer exceptionMonth; // YEARLY only
 
+    /* ===== TYPE & REASON ===== */
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "exception_type", nullable = false, length = 20)
     private ExceptionType exceptionType;
 
+    @Column(name = "reason", length = 500)
     private String reason;
 
-    @Column(nullable = false)
-    private Instant createdAt = Instant.now();
+    /* ===== VALIDATION ===== */
+    @PrePersist
+    @PreUpdate
+    private void validateDates() {
+        if (recurrence == ExceptionRecurrence.ONE_TIME && exceptionDate == null) {
+            throw new IllegalStateException("ONE_TIME exceptions must have exceptionDate");
+        }
+        if (recurrence == ExceptionRecurrence.MONTHLY && exceptionDay == null) {
+            throw new IllegalStateException("MONTHLY exceptions must have exceptionDay");
+        }
+        if (recurrence == ExceptionRecurrence.YEARLY &&
+                (exceptionDay == null || exceptionMonth == null)) {
+            throw new IllegalStateException("YEARLY exceptions must have exceptionDay and exceptionMonth");
+        }
+    }
 }
-

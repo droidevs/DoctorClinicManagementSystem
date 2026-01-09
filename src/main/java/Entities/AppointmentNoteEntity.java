@@ -4,7 +4,11 @@
  */
 package Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,15 +29,29 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "appointment_notes")
+@Table(
+    name = "appointment_notes",
+    indexes = {
+        @Index(name = "idx_note_appointment", columnList = "appointment_id"),
+        @Index(name = "idx_note_doctor", columnList = "doctor_id"),
+        @Index(name = "idx_note_created_at", columnList = "created_at")
+    }
+)
 public class AppointmentNoteEntity extends BaseEntity {
-    
-    @ManyToOne(optional = false)
+
+    /* ===== RELATIONS ===== */
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointment_id", nullable = false)
     private AppointmentEntity appointment;
-    
-    @ManyToOne(optional = false)
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
-    
+
+    /* ===== CONTENT ===== */
+
     @Lob
+    @Column(name = "note", nullable = false)
     private String note;
 }

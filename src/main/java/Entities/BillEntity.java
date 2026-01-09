@@ -5,17 +5,10 @@
 package Entities;
 
 import Enums.BillStatus;
-import Enums.PaymentMethod;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,24 +19,71 @@ import lombok.Setter;
  *
  * @author admin
  */
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "bills")
+@Table(
+        name = "bills",
+        indexes = {
+                @Index(name = "idx_bill_appointment", columnList = "appointment_id"),
+                @Index(name = "idx_bill_status", columnList = "status"),
+                @Index(name = "idx_bill_paid_at", columnList = "paid_at")
+        }
+)
 public class BillEntity extends BaseEntity {
-   
-    @OneToOne(optional = false)
+
+    /* ===== RELATION ===== */
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "appointment_id",
+            nullable = false,
+            unique = true,
+            foreignKey = @ForeignKey(name = "fk_bill_appointment")
+    )
     private AppointmentEntity appointment;
-    
-    @Column(name = "amount")
+
+    /* ===== MONEY ===== */
+
+    @Column(
+            name = "amount",
+            nullable = false,
+            precision = 10,
+            scale = 2
+    )
     private BigDecimal amount;
-    
-    @Column(name = "status")
+
+    /* ===== STATUS ===== */
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
     private BillStatus status;
-    
-    private Instant generatedAt;
+
+    /* ===== PAYMENT INFO ===== */
+
+    @Column(name = "paid_at")
     private Instant paidAt;
+
+    /* ===== VALIDATION ===== */
+
+    @PrePersist
+    @PreUpdate
+    private void validatePaymentConsistency() {
+        if (status == BillStatus.PAID && paidAt == null) {
+            throw new IllegalStateException(
+                    "paidAt must be set when bill status is PAID"
+            );
+        }
+
+        if (status != BillStatus.PAID && paidAt != null) {
+            throw new IllegalStateException(
+                    "paidAt must be null unless bill status is PAID"
+            );
+        }
+    }
 }
+

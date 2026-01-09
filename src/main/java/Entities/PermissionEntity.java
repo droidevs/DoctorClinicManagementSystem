@@ -8,17 +8,29 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "permissions")
-@Getter @Setter
+@Table(
+    name = "permissions",
+    indexes = {
+        @Index(name = "idx_permission_code", columnList = "code")
+    },
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_permission_code", columnNames = "code")
+    }
+)
+@Getter
+@Setter
 public class PermissionEntity extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
-    private String code;
+    @Column(name = "code", nullable = false, length = 100)
+    private String code; // e.g. APPOINTMENT_CREATE, USER_READ
 }
+
 
