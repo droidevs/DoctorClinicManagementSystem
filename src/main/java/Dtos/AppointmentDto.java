@@ -22,7 +22,7 @@ public record AppointmentDto(
         LocalDate appointmentDate,
 
         TimeSlotDto slot,
-        TimeSlotDto exceptionSlot,
+        ExceptionTimeSlotDto exceptionSlot,
 
         AppointmentStatus status,
         String reason,

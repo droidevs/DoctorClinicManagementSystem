@@ -5,7 +5,7 @@ import Entities.BaseEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "jakarta")
 public interface AuditMapper {
 
     @Mapping(source = "createdBy.id", target = "createdBy")

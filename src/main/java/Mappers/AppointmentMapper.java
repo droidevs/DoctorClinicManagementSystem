@@ -16,7 +16,8 @@ import org.mapstruct.Mapping;
                 AuditMapper.class,
                 PatientMapper.class,
                 DoctorMapper.class,
-                TimeSlotMapper.class
+                TimeSlotMapper.class,
+                ExceptionTimeSlotMapper.class
         }
 )
 public interface AppointmentMapper {
