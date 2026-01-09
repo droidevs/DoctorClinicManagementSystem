@@ -9,15 +9,11 @@ import java.time.Instant;
 import java.util.UUID;
 
 public record UserDto(
-    UUID id,
-    String email,
-    RoleDto role,
-    boolean enabled,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        String email,
+        RoleDto role,
+        boolean enabled,
+        AuditDto audit // contains createdBy, createdAt, updatedBy, updatedAt
 ) {}
+
 
