@@ -9,17 +9,19 @@ package Mappers;
 import Dtos.PermissionDto;
 import Entities.PermissionEntity;
 import java.util.Set;
+
+import jakarta.persistence.EntityListeners;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "jakarta" , uses = {UserMapper.class})
+@Mapper(componentModel = "jakarta", uses = {AuditMapper.class})
 public interface PermissionMapper {
-    
+
+    // ------------------------
+    // Entity → DTO
+    // ------------------------
+    @Mapping(source = ".", target = "audit")
+    // Map audit fields from BaseEntity
     PermissionDto toDto(PermissionEntity entity);
-    
-    PermissionEntity toEntity(PermissionDto dto);
-    
-    Set<PermissionDto> toDtoSet(Set<PermissionEntity> entities);
-    
-    Set<PermissionEntity> toEntitySet(Set<PermissionDto> dtos);
-    
+
+
 }

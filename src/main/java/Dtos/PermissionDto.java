@@ -7,13 +7,11 @@ package Dtos;
 import java.time.Instant;
 import java.util.UUID;
 
+import java.util.UUID;
+
 public record PermissionDto(
         UUID id,
         String code,
-        
-        // Audit fields (same order as AppointmentDto)
-        UserDto createdBy,
-        Instant createdAt,
-        UserDto updatedBy,
-        Instant updatedAt
+        AuditDto audit  // Reuse AuditDto for all audit info
 ) {}
+

@@ -12,9 +12,5 @@ public record RoleDto(
         UUID id,
         String name,
         Set<PermissionDto> permissions,
-        // Audit fields (same order as AppointmentDto)
-        UserDto createdBy,
-        Instant createdAt,
-        UserDto updatedBy,
-        Instant updatedAt
+        AuditDto audit // contains createdBy, createdAt, updatedBy, updatedAt
 ) {}

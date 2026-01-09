@@ -11,17 +11,34 @@ import org.mapstruct.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "jakarta", uses = {PermissionMapper.class, UserMapper.class})
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
+@Mapper(componentModel = "jakarta", uses = {PermissionMapper.class, AuditMapper.class})
 public interface RoleMapper {
-    
-    
+
+    // ------------------------
+    // Entity → DTO
+    // ------------------------
+    @Mapping(source = ".", target = "audit") // Map all audit fields into AuditDto
     RoleDto toDto(RoleEntity entity);
-    
+
+    // ------------------------
+    // DTO → Entity
+    // ------------------------
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     RoleEntity toEntity(RoleDto dto);
-    
-    Set<RoleDto> toDtoSet(Set<RoleEntity> entities);
-    
-    Set<RoleEntity> toEntitySet(Set<RoleDto> dtos);
-    
-    
+
+    // ------------------------
+    // Update existing entity from DTO (ignoring audit)
+    // ------------------------
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateEntityFromDto(RoleDto dto, @MappingTarget RoleEntity entity);
 }
