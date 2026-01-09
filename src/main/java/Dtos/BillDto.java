@@ -16,16 +16,11 @@ import java.util.UUID;
  * @author admin
  */
 public record BillDto(
-    UUID id,
-    AppointmentDto appointment,
-    BigDecimal amount,
-    BillStatus status,
-    PaymentMethod paymentMethod,
-    Instant paidAt,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        AppointmentDto appointment,
+        BigDecimal amount,
+        BillStatus status,
+        Instant paidAt,
+
+        AuditDto audit
 ) {}
