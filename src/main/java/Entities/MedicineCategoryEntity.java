@@ -54,5 +54,6 @@ public class MedicineCategoryEntity extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = false
     )
+    @Builder.Default
     private Set<MedicationEntity> medicines = new HashSet<>();
 }

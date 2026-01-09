@@ -5,6 +5,7 @@
 package Loggings.business.impl;
 
 import Dtos.RoleDto;
+import Entities.AppointmentEntity;
 import Entities.AuditLog;
 import Loggings.business.action.BusinessAction;
 import Loggings.business.context.BusinessLogContext;
@@ -33,6 +34,9 @@ public class JpaBusinessLogger implements BusinessLogger {
     @Override
     @Transactional
     public void log(BusinessAction action, ResourceType resourceType, UUID resourceId, String description) {
+        
+        AppointmentEntity entity;
+        
         
         AuditLog audit = new AuditLog(
                 context.userId(), (Set<String>) context.role().stream().map(RoleDto::name),

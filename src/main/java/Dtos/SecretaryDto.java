@@ -12,7 +12,6 @@ public record SecretaryDto(
 
         boolean canReceivePayments,
         boolean canVerifyIdentity,
-        boolean canMergeAccounts,
 
         AuditDto audit // contains createdBy, createdAt, updatedBy, updatedAt
 ) {}

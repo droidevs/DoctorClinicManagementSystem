@@ -86,6 +86,7 @@ public class PrescriptionEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "prescription_id")
     )
     @Column(name = "specific_time")
+    @Builder.Default
     private List<LocalTime> specificTimes = new ArrayList<>();
 
     /* ===== COLUMNS ===== */

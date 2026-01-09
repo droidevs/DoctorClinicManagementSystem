@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -53,6 +55,7 @@ public class RoleEntity extends BaseEntity {
             nullable = false
         )
     )
+    @Builder.Default
     private Set<PermissionEntity> permissions = new HashSet<>();
 }
 

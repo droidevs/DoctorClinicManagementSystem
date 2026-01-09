@@ -11,13 +11,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @Table(
         name = "medications",
@@ -63,6 +64,7 @@ public class MedicationEntity extends BaseEntity {
             )
     )
     @Column(name = "available_form", nullable = false, length = 50)
+    @Builder.Default
     private Set<String> availableForms = new HashSet<>();
 
     /* ===== MEDICAL DATA ===== */

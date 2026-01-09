@@ -60,5 +60,6 @@ public class PrescriptionSnapshot {
             joinColumns = @JoinColumn(name = "prescription_snapshot_id")
     )
     @Column(name = "specific_time")
+    @Builder.Default
     private List<LocalTime> specificTimes = new ArrayList<>();
 }
