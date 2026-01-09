@@ -64,13 +64,7 @@ public class TimeSlotRequestValidator
                 valid = false;
             }
         }
-        
-        // Business Rule 8: Validate order index is positive
-        if (request.orderIndex() < 0) {
-            addViolation(context, "Order index cannot be negative", "orderIndex");
-            valid = false;
-        }
-        
+
         return valid;
     }
     
