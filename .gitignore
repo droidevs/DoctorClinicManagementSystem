@@ -1,0 +1,43 @@
+# Tomcat files
+/.SmartTomcat/
+/target/
+*.war
+*.ear
+
+# Tomcat configuration files
+tomcat/
+apache-tomcat*/
+Tomcat*/
+.tomcat*/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Build outputs
+target/
+build/
+out/
+bin/
+dist/
+
+# Logs
+*.log
+logs/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database files
+*.db
+*.sqlite
