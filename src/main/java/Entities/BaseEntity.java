@@ -68,9 +68,4 @@ public abstract class BaseEntity {
         this.updatedAt = Instant.now();
     }
 
-    /* ===== GETTERS ===== */
-
-    public UUID getId() {
-        return id;
-    }
 }
