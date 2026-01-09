@@ -56,7 +56,7 @@ public class TimeSlotEntity extends BaseEntity {
         (SELECT max_reservations - COALESCE(
             (SELECT COUNT(*) FROM appointments a 
              WHERE a.time_slot_id = id 
-               AND a.status NOT IN ('CANCELLED', 'NO_SHOW')), 0)
+               AND a.status NOT IN ('CANCELLED')), 0)
         )
     """)
     @Setter(AccessLevel.NONE)
