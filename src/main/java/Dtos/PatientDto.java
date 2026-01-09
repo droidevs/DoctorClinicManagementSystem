@@ -10,18 +10,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record PatientDto(
-    UUID id,
-    UserDto user,
-    String firstName,
-    String lastName,
-    String gender,
-    LocalDate dateOfBirth,
-    String phone,
-    String address,
-    
-    // Audit fields (same order as AppointmentDto)
-    UserDto createdBy,
-    Instant createdAt,
-    UserDto updatedBy,
-    Instant updatedAt
+        UUID id,
+        UserDto user,
+        String firstName,
+        String lastName,
+        String gender,
+        LocalDate dateOfBirth,
+        String phone,
+        String address,
+        AuditDto audit // Contains createdBy, createdAt, updatedBy, updatedAt
 ) {}

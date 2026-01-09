@@ -11,6 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.Instant;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @ApplicationScoped // Better for listeners; state is handled by the context
 public class AuditListener {
 
-    @Inject
+    @PersistenceContext
     private EntityManager em; // Use EM directly for getReference
 
     @Inject
