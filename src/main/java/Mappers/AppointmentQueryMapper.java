@@ -5,7 +5,7 @@ import Requests.AppointmentFilterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "jakarta")
 public interface AppointmentQueryMapper {
     AppointmentQueryMapper INSTANCE = Mappers.getMapper(AppointmentQueryMapper.class);
     AppointmentQuery toQuery(AppointmentFilterRequest request);

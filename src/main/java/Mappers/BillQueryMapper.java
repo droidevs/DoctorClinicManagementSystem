@@ -8,7 +8,7 @@ import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import java.time.LocalDate;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "jakarta")
 public interface BillQueryMapper {
     BillQueryMapper INSTANCE = Mappers.getMapper(BillQueryMapper.class);
 

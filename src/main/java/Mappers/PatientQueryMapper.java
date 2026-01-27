@@ -5,7 +5,7 @@ import Requests.PatientFilterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "jakarta")
 public interface PatientQueryMapper {
     PatientQueryMapper INSTANCE = Mappers.getMapper(PatientQueryMapper.class);
     PatientQuery toQuery(Requests.PatientFilterRequest request);

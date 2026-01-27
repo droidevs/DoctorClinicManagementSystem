@@ -5,7 +5,7 @@ import Requests.SpecialisationFilterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "jakarta")
 public interface SpecialisationQueryMapper {
     SpecialisationQueryMapper INSTANCE = Mappers.getMapper(SpecialisationQueryMapper.class);
     SpecialisationQuery toQuery(Requests.SpecialisationFilterRequest request);
