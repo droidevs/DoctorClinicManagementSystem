@@ -80,8 +80,16 @@ public class BillEntity extends BaseEntity {
 
     /* ===== VALIDATION ===== */
 
-    @PrePersist
-    @PreUpdate
+    @Override
+    protected void validateOnPersist() {
+        validatePaymentConsistency();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validatePaymentConsistency();
+    }
+
     private void validatePaymentConsistency() {
         if (status == BillStatus.PAID && paidAt == null) {
             throw new IllegalStateException(

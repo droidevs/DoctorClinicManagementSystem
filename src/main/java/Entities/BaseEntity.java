@@ -15,7 +15,6 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import lombok.*;
@@ -60,11 +59,22 @@ public abstract class BaseEntity {
     @PrePersist
     protected void onCreate() {
         this.createdAt = Instant.now();
+        this.validateOnPersist();
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = Instant.now();
+        this.validateOnUpdate();
     }
 
+    /* ===== VALIDATION HOOKS ===== */
+
+    protected void validateOnPersist() {
+        // Default: no-op, subclasses override for persist-specific validation
+    }
+
+    protected void validateOnUpdate() {
+        // Default: no-op, subclasses override for update-specific validation
+    }
 }

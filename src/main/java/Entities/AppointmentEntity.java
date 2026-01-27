@@ -82,8 +82,17 @@ public class AppointmentEntity extends BaseEntity {
     private String cancelReason;
 
     /* ===== VALIDATION ===== */
-    @PrePersist
-    @PreUpdate
+
+    @Override
+    protected void validateOnPersist() {
+        validateSlotConsistency();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validateSlotConsistency();
+    }
+
     private void validateSlotConsistency() {
         if (slot != null && exceptionSlot != null) {
             throw new IllegalStateException(
