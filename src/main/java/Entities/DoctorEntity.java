@@ -70,5 +70,10 @@ public class DoctorEntity extends BaseEntity {
     )
     @Builder.Default
     private Set<SpecialisationEntity> specialisations = new HashSet<>();
-}
 
+    /* ===== SOFT DELETE ===== */
+
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+}

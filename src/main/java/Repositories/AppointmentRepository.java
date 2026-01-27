@@ -43,8 +43,6 @@ public interface AppointmentRepository {
     );
 
     void delete(AppointmentEntity appointment);
-    
-    void softDelete(UUID id);
 
     void restore(UUID id);
 

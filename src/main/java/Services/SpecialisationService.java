@@ -20,6 +20,7 @@ public interface SpecialisationService {
     
     SpecialisationDto create(CreateSpecialisationRequest request);
     
+    // delete(String id) is now always a safe/soft delete (sets deleted=true)
     SpecialisationDto delete(String id);
     
     SpecialisationDto findById(String id);
@@ -29,8 +30,6 @@ public interface SpecialisationService {
     List<SpecialisationDto> filter(SpecialisationFilterRequest request);
 
     public SpecialisationDto update(UUID id, UpdateSpecialisationRequest request);
-
-    void softDelete(String id);
 
     void restore(String id);
 

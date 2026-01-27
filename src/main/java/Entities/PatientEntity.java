@@ -66,5 +66,10 @@ public class PatientEntity extends BaseEntity {
 
     @Column(name = "address", length = 255)
     private String address;
-}
 
+    /* ===== SOFT DELETE ===== */
+
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+}

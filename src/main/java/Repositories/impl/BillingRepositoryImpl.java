@@ -5,6 +5,7 @@
 package Repositories.impl;
 
 
+import Criteria.BillQuery;
 import Entities.BillEntity;
 import Enums.BillStatus;
 import Repositories.BillingRepository;
@@ -15,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -59,7 +61,7 @@ public class BillingRepositoryImpl
                 em.createQuery("""
                     SELECT b
                     FROM BillEntity b
-                    WHERE b.appointment.id = :appointmentId
+                    WHERE b.appointment.id = :appointmentId AND b.deleted = false
                 """, BillEntity.class);
 
         return query
@@ -70,24 +72,80 @@ public class BillingRepositoryImpl
 
     @Override
     public List<BillEntity> findAll() {
-        return em.createQuery("""
-                SELECT b
-                FROM BillEntity b
-                ORDER BY b.generatedAt DESC
-                """, BillEntity.class)
+        return em.createQuery("SELECT b FROM BillEntity b WHERE b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
                 .getResultList();
     }
 
     @Override
+    public List<BillEntity> findAll(int page, int size) {
+        return em.createQuery("SELECT b FROM BillEntity b WHERE b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
+            .setFirstResult(page * size)
+            .setMaxResults(size)
+            .getResultList();
+    }
+
+    @Override
     public List<BillEntity> findByStatus(BillStatus status) {
-        return em.createQuery("""
-                SELECT b
-                FROM BillEntity b
-                WHERE b.status = :status
-                ORDER BY b.generatedAt DESC
-                """, BillEntity.class)
+        return em.createQuery("SELECT b FROM BillEntity b WHERE b.status = :status AND b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
                 .setParameter("status", status)
                 .getResultList();
+    }
+
+    @Override
+    public List<BillEntity> filter(BillQuery query) {
+        StringBuilder jpql = new StringBuilder("SELECT b FROM BillEntity b WHERE b.deleted = false");
+        if (query.getStatus() != null && !query.getStatus().isEmpty()) {
+            jpql.append(" AND b.status = :status");
+        }
+        if (query.getPatientId() != null) {
+            jpql.append(" AND b.patient.id = :patientId");
+        }
+        if (query.getDoctorId() != null) {
+            jpql.append(" AND b.doctor.id = :doctorId");
+        }
+        if (query.getUnpaidOnly() != null && query.getUnpaidOnly()) {
+            jpql.append(" AND b.status = 'UNPAID'");
+        }
+        if (query.getFromDate() != null) {
+            jpql.append(" AND b.createdAt >= :fromDate");
+        }
+        if (query.getToDate() != null) {
+            jpql.append(" AND b.createdAt <= :toDate");
+        }
+        if (query.getMinAmount() != null) {
+            jpql.append(" AND b.amount >= :minAmount");
+        }
+        if (query.getMaxAmount() != null) {
+            jpql.append(" AND b.amount <= :maxAmount");
+        }
+        jpql.append(" ORDER BY b.createdAt DESC");
+        TypedQuery<BillEntity> q = em.createQuery(jpql.toString(), BillEntity.class);
+        if (query.getStatus() != null && !query.getStatus().isEmpty()) {
+            q.setParameter("status", query.getStatus());
+        }
+        if (query.getPatientId() != null) {
+            q.setParameter("patientId", query.getPatientId());
+        }
+        if (query.getDoctorId() != null) {
+            q.setParameter("doctorId", query.getDoctorId());
+        }
+        if (query.getFromDate() != null) {
+            q.setParameter("fromDate", query.getFromDate());
+        }
+        if (query.getToDate() != null) {
+            q.setParameter("toDate", query.getToDate());
+        }
+        if (query.getMinAmount() != null) {
+            q.setParameter("minAmount", query.getMinAmount());
+        }
+        if (query.getMaxAmount() != null) {
+            q.setParameter("maxAmount", query.getMaxAmount());
+        }
+        if (query.getPagination() != null) {
+            q.setFirstResult(query.getPagination().page() * query.getPagination().size());
+            q.setMaxResults(query.getPagination().size());
+        }
+        return q.getResultList();
     }
 
     /* -------------------------
@@ -99,7 +157,7 @@ public class BillingRepositoryImpl
         Long count = em.createQuery("""
                 SELECT COUNT(b)
                 FROM BillEntity b
-                WHERE b.appointment.id = :appointmentId
+                WHERE b.appointment.id = :appointmentId AND b.deleted = false
                 """, Long.class)
                 .setParameter("appointmentId", appointmentId)
                 .getSingleResult();
@@ -113,11 +171,26 @@ public class BillingRepositoryImpl
 
     @Override
     public void delete(BillEntity bill) {
-        BillEntity managed =
-                em.contains(bill)
-                        ? bill
-                        : em.merge(bill);
+        bill.setDeleted(true);
+        em.merge(bill);
+    }
 
-        em.remove(managed);
+    @Override
+    public void softDelete(UUID id) {
+        // TODO: Implement soft delete logic if supported
+    }
+
+    @Override
+    public void restore(UUID id) {
+        // TODO: Implement restore logic if supported
+    }
+
+    @Override
+    public List<BillEntity> searchByDateRange(String from, String to) {
+        String jpql = "SELECT b FROM BillEntity b WHERE b.createdAt >= :from AND b.createdAt <= :to AND b.deleted = false ORDER BY b.createdAt DESC";
+        return em.createQuery(jpql, BillEntity.class)
+            .setParameter("from", from)
+            .setParameter("to", to)
+            .getResultList();
     }
 }

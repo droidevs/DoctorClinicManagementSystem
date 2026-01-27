@@ -30,15 +30,7 @@ public interface DoctorRepository {
     
     void deleteById(UUID doctorId);
 
-    void softDelete(UUID id);
-
     void restore(UUID id);
-
-    List<DoctorEntity> searchByName(String name);
-
-    boolean existsByEmail(String email);
-
-    void assignPatient(UUID doctorId, UUID patientId);
 
     List<DoctorEntity> filter(DoctorQuery query);
 }

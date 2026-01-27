@@ -26,17 +26,12 @@ public interface DoctorService {
 
     DoctorDto assignSpecialisations(String id, AssignSpecialisationsRequest request);
 
+    // delete(UUID id) is now always a safe/soft delete (sets deleted=true)
     void delete(UUID id);
-
-    void softDelete(UUID id);
 
     void restore(UUID id);
 
     List<DoctorDto> searchByName(String name);
-
-    boolean existsByEmail(String email);
-
-    void assignPatient(UUID doctorId, UUID patientId);
 
     List<DoctorDto> filter(DoctorFilterRequest request);
 }

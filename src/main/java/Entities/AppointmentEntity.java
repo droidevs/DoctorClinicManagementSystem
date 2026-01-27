@@ -81,7 +81,6 @@ public class AppointmentEntity extends BaseEntity {
     private String cancelReason;
 
     /* ===== VALIDATION ===== */
-
     @PrePersist
     @PreUpdate
     private void validateSlotConsistency() {
@@ -97,4 +96,8 @@ public class AppointmentEntity extends BaseEntity {
             );
         }
     }
+
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
 }

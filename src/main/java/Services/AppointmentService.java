@@ -36,9 +36,8 @@ public interface AppointmentService {
     
     AppointmentDto cancel(String id, CancelAppointmentRequest request);
 
+    // delete(UUID id) is now always a safe/soft delete (sets deleted=true)
     void delete(UUID id);
-
-    void softDelete(UUID id);
 
     void restore(UUID id);
 

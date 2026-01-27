@@ -71,6 +71,12 @@ public class BillEntity extends BaseEntity {
     @Column(name = "paid_at")
     private Instant paidAt;
 
+    /* ===== DELETED ===== */
+
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+
     /* ===== VALIDATION ===== */
 
     @PrePersist
@@ -89,4 +95,3 @@ public class BillEntity extends BaseEntity {
         }
     }
 }
-

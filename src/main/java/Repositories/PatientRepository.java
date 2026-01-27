@@ -30,8 +30,6 @@ public interface PatientRepository {
 
     List<PatientEntity> searchByName(String name);
 
-    boolean existsByEmail(String email);
-
     void delete(PatientEntity patient);
 
     List<PatientEntity> filter(PatientQuery query);

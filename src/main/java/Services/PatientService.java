@@ -23,15 +23,12 @@ public interface PatientService {
 
     List<PatientDto> findAll(int page, int size);
 
+    // delete(UUID id) is now always a safe/soft delete (sets deleted=true)
     void delete(UUID id);
-
-    void softDelete(UUID id);
 
     void restore(UUID id);
 
     List<PatientDto> searchByName(String name);
-
-    boolean existsByEmail(String email);
 
     List<PatientDto> filter(PatientFilterRequest request);
 }

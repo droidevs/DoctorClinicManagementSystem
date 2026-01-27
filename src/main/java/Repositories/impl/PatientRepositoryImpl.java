@@ -5,6 +5,7 @@
 package Repositories.impl;
 
 
+import Criteria.PatientQuery;
 import Entities.PatientEntity;
 import Repositories.PatientRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -58,7 +59,7 @@ public class PatientRepositoryImpl
                 em.createQuery("""
                     SELECT p
                     FROM PatientEntity p
-                    WHERE p.user.id = :userId
+                    WHERE p.user.id = :userId AND p.deleted = false
                 """, PatientEntity.class);
 
         return query
@@ -72,9 +73,42 @@ public class PatientRepositoryImpl
         return em.createQuery("""
                 SELECT p
                 FROM PatientEntity p
+                WHERE p.deleted = false
                 ORDER BY p.createdAt DESC
                 """, PatientEntity.class)
                 .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findAll(int page, int size) {
+        return em.createQuery("SELECT p FROM PatientEntity p WHERE p.deleted = false ORDER BY p.createdAt DESC", PatientEntity.class)
+            .setFirstResult(page * size)
+            .setMaxResults(size)
+            .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> filter(PatientQuery query) {
+        StringBuilder jpql = new StringBuilder("SELECT p FROM PatientEntity p WHERE p.deleted = false");
+        if (query.getName() != null && !query.getName().isEmpty()) {
+            jpql.append(" AND (LOWER(p.firstName) LIKE LOWER(:name) OR LOWER(p.lastName) LIKE LOWER(:name))");
+        }
+        if (query.getEmail() != null && !query.getEmail().isEmpty()) {
+            jpql.append(" AND LOWER(p.email) = LOWER(:email)");
+        }
+        jpql.append(" ORDER BY p.createdAt DESC");
+        TypedQuery<PatientEntity> q = em.createQuery(jpql.toString(), PatientEntity.class);
+        if (query.getName() != null && !query.getName().isEmpty()) {
+            q.setParameter("name", "%" + query.getName() + "%");
+        }
+        if (query.getEmail() != null && !query.getEmail().isEmpty()) {
+            q.setParameter("email", query.getEmail());
+        }
+        if (query.getPagination() != null) {
+            q.setFirstResult(query.getPagination().page() * query.getPagination().size());
+            q.setMaxResults(query.getPagination().size());
+        }
+        return q.getResultList();
     }
 
     /* -------------------------
@@ -83,11 +117,24 @@ public class PatientRepositoryImpl
 
     @Override
     public void delete(PatientEntity patient) {
-        PatientEntity managed =
-                em.contains(patient)
-                        ? patient
-                        : em.merge(patient);
+        patient.setDeleted(true);
+        em.merge(patient);
+    }
 
-        em.remove(managed);
+    @Override
+    public void softDelete(UUID id) {
+        // TODO: Implement soft delete logic if supported
+    }
+
+    @Override
+    public void restore(UUID id) {
+        // TODO: Implement restore logic if supported
+    }
+
+    @Override
+    public List<PatientEntity> searchByName(String name) {
+        return em.createQuery("SELECT p FROM PatientEntity p WHERE (LOWER(p.firstName) LIKE LOWER(:name) OR LOWER(p.lastName) LIKE LOWER(:name)) AND p.deleted = false ORDER BY p.createdAt DESC", PatientEntity.class)
+            .setParameter("name", "%" + name + "%")
+            .getResultList();
     }
 }

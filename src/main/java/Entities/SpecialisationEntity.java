@@ -41,5 +41,8 @@ public class SpecialisationEntity extends BaseEntity {
         length = 150
     )
     private String name;
-}
 
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+}
