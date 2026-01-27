@@ -8,6 +8,7 @@ package Repositories;
 import Entities.AppointmentEntity;
 import Enums.AppointmentStatus;
 import Requests.AppointmentFilterRequest;
+import Requests.Pagination;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

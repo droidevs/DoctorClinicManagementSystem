@@ -13,8 +13,7 @@ import java.util.UUID;
 @ValidBillFilter
 public record BillFilterRequest(
 
-        int page,
-        int size,
+        Pagination pagination,
 
         @Pattern(regexp = "PAID|UNPAID",
                  message = "Status must be PAID or UNPAID")
@@ -38,11 +37,10 @@ public record BillFilterRequest(
         @DecimalMin(value = "0.0", inclusive = true, message = "maxAmount must be >= 0")
         Double maxAmount
 
-) implements PageRequest {
-
+) {
     // Builder method for convenience
-    public static BillFilterRequest of(int page, int size, String status, UUID patientId, Boolean unpaidOnly) {
-        return new BillFilterRequest(page, size, status, patientId, null, unpaidOnly, null, null, null, null);
+    public static BillFilterRequest of(Pagination pagination, String status, UUID patientId, Boolean unpaidOnly) {
+        return new BillFilterRequest(pagination, status, patientId, null, unpaidOnly, null, null, null, null);
     }
 
     // Optional: method to convert date strings to LocalDate

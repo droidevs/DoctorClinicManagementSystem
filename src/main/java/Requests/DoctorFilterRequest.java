@@ -1,9 +1,8 @@
 package Requests;
 
 public record DoctorFilterRequest(
-    int page,
-    int size,
+    Pagination pagination,
     String name,
     String email,
     String specialisation
-) implements PageRequest {}
+) {}

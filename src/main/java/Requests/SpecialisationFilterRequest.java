@@ -9,7 +9,6 @@ package Requests;
  * @author admin
  */
 public record SpecialisationFilterRequest(
-    int page,
-    int size,
+    Pagination pagination,
     String searchQuery
-) implements PageRequest {}
+) {}

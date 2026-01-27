@@ -14,9 +14,7 @@ import java.util.UUID;
 @ValidAppointmentDate
 public record AppointmentFilterRequest(
 
-        int page,
-
-        int size,
+        Pagination pagination,
 
         // Optional filter by doctor
         // @NotNull can be added if required
@@ -36,4 +34,4 @@ public record AppointmentFilterRequest(
         @Nullable
         String status
 
-) implements PageRequest {}
+) {}
