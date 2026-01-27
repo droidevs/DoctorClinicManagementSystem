@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Complete Patient Profile</title>
+</h:head>
+<h:body>
+    <h:panelGroup rendered="#{patientProfilePage.hasProfile}">
+        <h:outputText value="Profile already exists. Redirecting..."/>
+        <f:event type="preRenderView" listener="#{patientProfilePage.redirectIfHasProfile}"/>
+    </h:panelGroup>
+
+    <h:form rendered="#{!patientProfilePage.hasProfile}">
+        <h2>Complete Your Patient Profile</h2>
+        <h:messages globalOnly="true"/>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="firstName" value="First Name:"/>
+            <h:inputText id="firstName" value="#{patientProfilePage.firstName}" required="true"/>
+
+            <h:outputLabel for="lastName" value="Last Name:"/>
+            <h:inputText id="lastName" value="#{patientProfilePage.lastName}" required="true"/>
+
+            <h:outputLabel for="gender" value="Gender:"/>
+            <h:selectOneMenu id="gender" value="#{patientProfilePage.gender}">
+                <f:selectItem itemValue="" itemLabel="Select Gender"/>
+                <f:selectItem itemValue="MALE" itemLabel="Male"/>
+                <f:selectItem itemValue="FEMALE" itemLabel="Female"/>
+                <f:selectItem itemValue="OTHER" itemLabel="Other"/>
+            </h:selectOneMenu>
+
+            <h:outputLabel for="dateOfBirth" value="Date of Birth:"/>
+            <h:inputText id="dateOfBirth" value="#{patientProfilePage.dateOfBirth}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:inputText>
+
+            <h:outputLabel for="phone" value="Phone:"/>
+            <h:inputText id="phone" value="#{patientProfilePage.phone}"/>
+
+            <h:outputLabel for="address" value="Address:"/>
+            <h:inputTextarea id="address" value="#{patientProfilePage.address}"/>
+        </h:panelGrid>
+        <h:commandButton value="Save Profile" action="#{patientProfilePage.saveProfile}"/>
+        <h:outputText value="#{patientProfilePage.message}" style="color:green;" rendered="#{not empty patientProfilePage.message}"/>
+    </h:form>
+</h:body>
+</html>

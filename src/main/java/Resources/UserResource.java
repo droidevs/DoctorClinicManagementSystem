@@ -5,6 +5,8 @@
 package Resources;
 
 import Dtos.UserDto;
+import Requests.RegisterUserRequest;
+import Services.AuthService;
 import Services.UserService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,12 +19,30 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
-    
-    
     @Inject
     private UserService userService;
-    
+
+    @Inject
+    private AuthService authService;
+
+    // POST /users/register - Register a new user
+    @POST
+    @Path("/register")
+    public Response register(RegisterUserRequest request) {
+        String token = authService.register(request);
+        return Response.ok(token).build();
+    }
+
+    // POST /users/login - Login user
+    @POST
+    @Path("/login")
+    public Response login(Requests.LoginRequest request) {
+        String token = authService.login(request);
+        return Response.ok(token).build();
+    }
+
     // GET /users/{id} - Get user by ID
     @GET
     @Path("/{id}")
@@ -53,5 +73,4 @@ public class UserResource {
         userService.disable(id);
         return Response.ok().entity("User disabled successfully").build();
     }
-    
 }

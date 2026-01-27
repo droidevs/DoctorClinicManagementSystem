@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+              http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+              version="2.3">
+
+    <!-- Navigation Rules for explicit page management -->
+
+    <!-- From register page -->
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{registerPage.register}</from-action>
+            <from-outcome>patientProfile</from-outcome>
+            <to-view-id>/patientProfile.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- From login page -->
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{loginPage.login}</from-action>
+            <from-outcome>patientProfile</from-outcome>
+            <to-view-id>/patientProfile.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{loginPage.logout}</from-action>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- From patientProfile page -->
+    <navigation-rule>
+        <from-view-id>/patientProfile.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{patientProfilePage.saveProfile}</from-action>
+            <from-outcome>dashboard</from-outcome>
+            <to-view-id>/dashboard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- Flow Definition for Patient Onboarding -->
+    <flow-definition id="patient">
+        <start-node>register</start-node>
+        <view id="register">
+            <vdl-document>/register.xhtml</vdl-document>
+        </view>
+        <view id="patientProfile">
+            <vdl-document>/patientProfile.xhtml</vdl-document>
+        </view>
+        <view id="dashboard">
+            <vdl-document>/dashboard.xhtml</vdl-document>
+        </view>
+        <flow-return id="exit">
+            <from-outcome>exit</from-outcome>
+        </flow-return>
+    </flow-definition>
+
+</faces-config>

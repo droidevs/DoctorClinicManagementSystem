@@ -14,11 +14,10 @@ import Requests.RegisterUserRequest;
  */
 public interface AuthService {
     
-    
-    void login(LoginRequest request);
-    
-    void register(RegisterUserRequest request);
-    
+    String register(RegisterUserRequest request);
+
+    String login(LoginRequest request);
+
     void logout();
     
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Login</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h2>Login</h2>
+        <h:messages globalOnly="true"/>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="email" value="Email:"/>
+            <h:inputText id="email" value="#{loginPage.email}" required="true">
+                <f:validateRegex pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"/>
+            </h:inputText>
+
+            <h:outputLabel for="password" value="Password:"/>
+            <h:inputSecret id="password" value="#{loginPage.password}" required="true"/>
+        </h:panelGrid>
+        <h:commandButton value="Login" action="#{loginPage.login}"/>
+        <h:outputText value="#{loginPage.message}" style="color:green;" rendered="#{not empty loginPage.message}"/>
+        <br/>
+        <h:link value="Register" outcome="register"/>
+    </h:form>
+</h:body>
+</html>

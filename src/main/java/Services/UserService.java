@@ -9,6 +9,7 @@ import Dtos.UserDto;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import Entities.RoleEntity;
 
 
 public interface UserService {
@@ -30,4 +31,6 @@ public interface UserService {
     void removeRole(UUID userId, RoleDto role);
 
     void enable(UUID id);
+
+    RoleEntity findRoleByName(String roleName);
 }
