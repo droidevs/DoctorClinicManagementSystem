@@ -21,5 +21,15 @@ public interface PatientRepository {
 
     List<PatientEntity> findAll();
 
+    List<PatientEntity> findAll(int page, int size);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<PatientEntity> searchByName(String name);
+
+    boolean existsByEmail(String email);
+
     void delete(PatientEntity patient);
 }

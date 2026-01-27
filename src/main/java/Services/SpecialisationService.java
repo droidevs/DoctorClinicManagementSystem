@@ -29,4 +29,14 @@ public interface SpecialisationService {
     List<SpecialisationDto> filter(SpecialisationFilterRequest request);
 
     public SpecialisationDto update(UUID id, UpdateSpecialisationRequest request);
+
+    List<SpecialisationDto> findAll(int page, int size);
+
+    void softDelete(String id);
+
+    void restore(String id);
+
+    List<SpecialisationDto> searchByName(String name);
+
+    boolean existsByName(String name);
 }

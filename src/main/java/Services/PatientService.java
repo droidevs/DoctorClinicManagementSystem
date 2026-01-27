@@ -20,5 +20,15 @@ public interface PatientService {
 
     List<PatientDto> findAll();
 
+    List<PatientDto> findAll(int page, int size);
+
     void delete(UUID id);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<PatientDto> searchByName(String name);
+
+    boolean existsByEmail(String email);
 }

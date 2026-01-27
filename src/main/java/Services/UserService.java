@@ -24,4 +24,10 @@ public interface UserService {
     UUID resolveUserId(String principalName);
     
     Set<RoleDto> getUserRoles(UUID userId);
+
+    void assignRole(UUID userId, RoleDto role);
+
+    void removeRole(UUID userId, RoleDto role);
+
+    void enable(UUID id);
 }

@@ -21,5 +21,13 @@ public interface PrescriptionRepository {
 
     List<PrescriptionEntity> findAll();
 
+    List<PrescriptionEntity> findAll(int page, int size);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<PrescriptionEntity> findByPatientId(UUID patientId);
+
     void delete(PrescriptionEntity prescription);
 }

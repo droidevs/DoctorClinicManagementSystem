@@ -21,7 +21,7 @@ public interface DayScheduleMapper {
        ======================== */
 
     @Mapping(source = ".", target = "audit")
-    @Mapping(source = "timeSlots", target = "slots")
+    @Mapping(target = "slots", ignore = true)
     DayScheduleDto toDto(DayScheduleEntity entity);
 
 

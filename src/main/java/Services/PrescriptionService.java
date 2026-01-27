@@ -16,4 +16,12 @@ public interface PrescriptionService {
     PrescriptionDto findById(UUID id);
 
     List<PrescriptionDto> findAll();
+
+    List<PrescriptionDto> findAll(int page, int size);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<PrescriptionDto> searchByPatient(UUID patientId);
 }

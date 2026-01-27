@@ -21,6 +21,14 @@ public interface SpecialisationRepository {
 
     List<SpecialisationEntity> findAll();
 
+    List<SpecialisationEntity> findAll(int page, int size);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<SpecialisationEntity> searchByName(String name);
+
     boolean existsByName(String name);
 
     void delete(SpecialisationEntity specialisation);

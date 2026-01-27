@@ -23,9 +23,17 @@ public interface BillingRepository {
 
     List<BillEntity> findAll();
 
+    List<BillEntity> findAll(int page, int size);
+
     List<BillEntity> findByStatus(BillStatus status);
 
     boolean existsByAppointmentId(UUID appointmentId);
 
     void delete(BillEntity bill);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<BillEntity> searchByDateRange(String from, String to);
 }

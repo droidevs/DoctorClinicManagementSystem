@@ -20,10 +20,10 @@ public record CreatePrescriptionRequest(
     String medicineName,
     
     @Valid @NotNull 
-    DosageModel dosage,
+    DosageRequest dosage,
     
     @Valid @NotNull 
-    FrequencyModel frequency,
+    FrequencyRequest frequency,
     
     String instructions
 ) {}

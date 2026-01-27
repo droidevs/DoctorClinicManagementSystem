@@ -4,6 +4,7 @@
  */
 package Loggings;
 
+import Entities.AppointmentEntity;
 import Filters.FilterPriority;
 import jakarta.annotation.Priority;
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -12,7 +13,6 @@ import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
-
 /**
  *
  * @author admin
@@ -26,7 +26,7 @@ public class CorrelationIdFilter implements ContainerRequestFilter, ContainerRes
     @Override
     public void filter(ContainerRequestContext crc) throws IOException {
         String correlationId = crc.getHeaderString(HEADER_NAME);
-        
+
         if (correlationId == null || correlationId.isBlank()) {
             correlationId = CorrelationIdGenerator.generate();
         }

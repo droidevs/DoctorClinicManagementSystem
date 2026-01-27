@@ -7,11 +7,14 @@ package Requests;
 import Enums.FrequencyType;
 import Enums.PeriodUnit;
 import Enums.TimingModifier;
+import java.time.LocalTime;
+import java.util.List;
 
 
-public record FrequencyModel(
-    FrequencyType type,      // e.g., RECURRING vs AS_NEEDED
-    int timesPerPeriod,      // e.g., 3
-    PeriodUnit period,       // e.g., PER_DAY
-    TimingModifier timing    // e.g., BEFORE_MEALS
+public record FrequencyRequest(
+    FrequencyType type,
+    Integer timesPerPeriod,
+    PeriodUnit periodUnit,
+    TimingModifier timingModifier,
+    List<LocalTime> specificTimes
 ) {}

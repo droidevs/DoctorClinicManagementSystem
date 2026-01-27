@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SecurityService {
-    
+
     @Inject
     private SecurityContext securityContext;
-    
+
     @Inject
     private PasswordHash passwordHash;
-    
+
     /**
      * Get current authenticated user
      */
@@ -37,29 +37,29 @@ public class SecurityService {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Get current user ID
-     * @return 
+     * @return
      */
     public Optional<UUID> getCurrentUserId() {
         return getCurrentUser().map(JwtPrincipal::getUserId);
     }
-    
+
     /**
      * Check if current user has role
      */
     public boolean hasRole(Role role) {
         return securityContext.isCallerInRole(role.name());
     }
-    
+
     /**
      * Check if user is authenticated
      */
     public boolean isAuthenticated() {
         return securityContext.getCallerPrincipal() != null;
     }
-    
+
     /**
      * Get all caller groups (roles)
      */

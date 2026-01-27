@@ -23,6 +23,8 @@ public interface AppointmentRepository {
 
     List<AppointmentEntity> findAll();
 
+    List<AppointmentEntity> findAll(int page, int size);
+
     List<AppointmentEntity> findByDoctorId(UUID doctorId);
 
     List<AppointmentEntity> findByPatientId(UUID patientId);
@@ -39,6 +41,16 @@ public interface AppointmentRepository {
 
     void delete(AppointmentEntity appointment);
     
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<AppointmentEntity> searchByDateRange(String from, String to);
+
+    long countByDoctor(UUID doctorId);
+
+    long countByPatient(UUID patientId);
+
     long countByTimeSlotAndDate(UUID slotId, LocalDate date);
 
     long countByExceptionSlotAndDate(UUID exceptionSlotId, LocalDate date);

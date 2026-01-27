@@ -21,9 +21,21 @@ public interface DoctorRepository {
 
     List<DoctorEntity> findAll();
 
+    List<DoctorEntity> findAll(int page, int size);
+
     List<DoctorEntity> findBySpecialisationId(UUID specialisationId);
 
     void delete(DoctorEntity doctor);
     
     void deleteById(UUID doctorId);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<DoctorEntity> searchByName(String name);
+
+    boolean existsByEmail(String email);
+
+    void assignPatient(UUID doctorId, UUID patientId);
 }

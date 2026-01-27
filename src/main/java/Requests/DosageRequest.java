@@ -10,13 +10,15 @@ import Validators.annotations.ValidDosageValue;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public record DosageModel(
+public record DosageRequest(
     @ValidDosageValue
     BigDecimal value,
     
     @NotNull
     WeightUnit unit,
     
-    @NotNull(message = "Administration route is required")
-    AdministrationRoute route
+    @NotNull
+    AdministrationRoute route,
+    
+    String form
 ) {}

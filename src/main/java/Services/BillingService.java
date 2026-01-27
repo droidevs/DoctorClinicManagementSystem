@@ -20,7 +20,17 @@ public interface BillingService {
 
     List<BillDto> findAll();
     
+    List<BillDto> findAll(int page, int size);
+
     List<BillDto> filter(BillFilterRequest request);
 
+    List<BillDto> filter(BillFilterRequest request, int page, int size);
+
     BillDto pay(UUID id, PaymentRequest request);
+
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<BillDto> searchByDateRange(String from, String to);
 }

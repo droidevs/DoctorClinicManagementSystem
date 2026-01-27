@@ -26,7 +26,11 @@ public interface AppointmentService {
 
     List<AppointmentDto> findAll();
     
+    List<AppointmentDto> findAll(int page, int size);
+
     List<AppointmentDto> filter(AppointmentFilterRequest request);
+
+    List<AppointmentDto> filter(AppointmentFilterRequest request, int page, int size);
 
     AppointmentDto updateStatus(UUID id, String status);
     
@@ -35,5 +39,14 @@ public interface AppointmentService {
     AppointmentDto cancel(String id, CancelAppointmentRequest request);
 
     void delete(UUID id);
-}
 
+    void softDelete(UUID id);
+
+    void restore(UUID id);
+
+    List<AppointmentDto> searchByDateRange(String from, String to);
+
+    long countByDoctor(UUID doctorId);
+
+    long countByPatient(UUID patientId);
+}
