@@ -5,6 +5,9 @@
 package Requests;
 
 import Enums.AppointmentStatus;
+import Validators.annotations.ValidReason;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -12,9 +15,13 @@ import java.time.LocalDateTime;
  * @author admin
  */
 public record UpdateAppointmentRequest(
-        LocalDateTime appointmentDatetime,
-        AppointmentStatus status,
-        String reason
-        ) {
+        @NotNull(message = "Appointment datetime is required")
+        @FutureOrPresent(message = "Appointment datetime cannot be in the past")
+        LocalDateTime appointmentDate,
 
-}
+        @NotNull(message = "Status is required")
+        AppointmentStatus status,
+
+        @ValidReason
+        String reason
+) {}

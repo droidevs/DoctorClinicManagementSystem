@@ -4,11 +4,19 @@
  */
 package Requests;
 
+import Validators.annotations.ValidName;
+import jakarta.validation.constraints.NotBlank;
+
 /**
  *
  * @author admin
  */
 public record UpdateDoctorRequest(
+        @ValidName
+        @NotBlank(message = "First name is required")
         String firstName,
+
+        @ValidName
+        @NotBlank(message = "Last name is required")
         String lastName
-        ) {}
+) {}

@@ -4,11 +4,19 @@
  */
 package Requests;
 
+import Validators.annotations.ValidDescription;
+import Validators.annotations.ValidSpecialisationName;
+import jakarta.validation.constraints.NotBlank;
+
 /**
  *
  * @author admin
  */
 public record UpdateSpecialisationRequest(
+    @ValidSpecialisationName
+    @NotBlank(message = "Name is required")
     String name,
+
+    @ValidDescription
     String description
 ) {}

@@ -4,13 +4,25 @@
  */
 package Requests;
 
+import Validators.annotations.ValidEmail;
+import Validators.annotations.ValidPassword;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 
 /**
  *
  * @author admin
  */
 public record RegisterUserRequest (
+
+        @ValidEmail
         String email,
+
+        @ValidPassword
         String password,
+
+        @NotBlank(message = "Role is required")
         String role
     ){}
