@@ -21,14 +21,23 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_permission_code", columnNames = "code")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Permission.findById", query = "SELECT p FROM PermissionEntity p WHERE p.id = :id"),
+    @NamedQuery(name = "Permission.findByCode", query = "SELECT p FROM PermissionEntity p WHERE p.code = :code"),
+    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM PermissionEntity p ORDER BY p.code ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
 @SuperBuilder
 public class PermissionEntity extends BaseEntity {
 
+
+
     @Column(name = "code", nullable = false, length = 100)
     private String code; // e.g. APPOINTMENT_CREATE, USER_READ
+
+    public PermissionEntity() {
+
+    }
 }
-
-

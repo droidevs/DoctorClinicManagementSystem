@@ -32,6 +32,11 @@ import lombok.experimental.SuperBuilder;
         @Index(name = "idx_note_created_at", columnList = "created_at")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "AppointmentNote.findById", query = "SELECT n FROM AppointmentNoteEntity n WHERE n.id = :id"),
+    @NamedQuery(name = "AppointmentNote.findByAppointmentId", query = "SELECT n FROM AppointmentNoteEntity n WHERE n.appointment.id = :appointmentId ORDER BY n.createdAt DESC"),
+    @NamedQuery(name = "AppointmentNote.findAll", query = "SELECT n FROM AppointmentNoteEntity n ORDER BY n.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 public class AppointmentNoteEntity extends BaseEntity {
 

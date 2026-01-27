@@ -26,6 +26,10 @@ public interface DoctorRepository {
 
     List<DoctorEntity> findBySpecialisationId(UUID specialisationId);
 
+    List<DoctorEntity> findByName(String name);
+
+    List<DoctorEntity> findBySpecialisation(String specialisationName);
+
     void delete(DoctorEntity doctor);
     
     void deleteById(UUID doctorId);

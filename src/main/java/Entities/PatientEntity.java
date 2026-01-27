@@ -28,6 +28,14 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_patient_user", columnNames = "user_id")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Patient.findById", query = "SELECT p FROM PatientEntity p WHERE p.id = :id"),
+    @NamedQuery(name = "Patient.findByUserId", query = "SELECT p FROM PatientEntity p WHERE p.user.id = :userId AND p.deleted = false"),
+    @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM PatientEntity p WHERE p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Patient.findByName", query = "SELECT p FROM PatientEntity p WHERE (LOWER(p.firstName) LIKE LOWER(:name) OR LOWER(p.lastName) LIKE LOWER(:name)) AND p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Patient.findByPhone", query = "SELECT p FROM PatientEntity p WHERE p.phone = :phone AND p.deleted = false"),
+    @NamedQuery(name = "Patient.filter", query = "SELECT p FROM PatientEntity p WHERE p.deleted = false AND (:name = '%' OR LOWER(p.firstName) LIKE LOWER(:name) OR LOWER(p.lastName) LIKE LOWER(:name)) AND (:email = '' OR LOWER(p.user.email) = LOWER(:email)) ORDER BY p.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

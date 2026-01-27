@@ -41,17 +41,37 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserEntity> findByEmail(String email) {
-        String jpql = "SELECT u FROM UserEntity u WHERE u.email = :email";
-        TypedQuery<UserEntity> query = entityManager.createQuery(jpql, UserEntity.class);
-        query.setParameter("email", email);
-        return query.getResultStream().findFirst();
+        return entityManager.createNamedQuery("User.findByEmail", UserEntity.class)
+                            .setParameter("email", email)
+                            .getResultStream()
+                            .findFirst();
     }
 
     @Override
     public List<UserEntity> findAll() {
-        String jpql = "SELECT u FROM UserEntity u";
-        TypedQuery<UserEntity> query = entityManager.createQuery(jpql, UserEntity.class);
-        return query.getResultList();
+        return entityManager.createNamedQuery("User.findAll", UserEntity.class)
+                            .getResultList();
+    }
+
+    @Override
+    public Optional<UserEntity> findByUsername(String username) {
+        return entityManager.createNamedQuery("User.findByUsername", UserEntity.class)
+                            .setParameter("username", username)
+                            .getResultStream()
+                            .findFirst();
+    }
+
+    @Override
+    public List<UserEntity> findAllActive() {
+        return entityManager.createNamedQuery("User.findAllActive", UserEntity.class)
+                            .getResultList();
+    }
+
+    @Override
+    public List<UserEntity> findByRole(String roleName) {
+        return entityManager.createNamedQuery("User.findByRole", UserEntity.class)
+                            .setParameter("roleName", roleName)
+                            .getResultList();
     }
 
     @Override
@@ -69,4 +89,3 @@ public class UserRepositoryImpl implements UserRepository {
         entityManager.remove(managedUser);
     }
 }
-

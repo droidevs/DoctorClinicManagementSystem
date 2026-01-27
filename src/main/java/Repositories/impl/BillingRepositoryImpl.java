@@ -57,90 +57,44 @@ public class BillingRepositoryImpl
 
     @Override
     public Optional<BillEntity> findByAppointmentId(UUID appointmentId) {
-        TypedQuery<BillEntity> query =
-                em.createQuery("""
-                    SELECT b
-                    FROM BillEntity b
-                    WHERE b.appointment.id = :appointmentId AND b.deleted = false
-                """, BillEntity.class);
-
-        return query
-                .setParameter("appointmentId", appointmentId)
-                .getResultStream()
-                .findFirst();
+        return em.createNamedQuery("Bill.findByAppointmentId", BillEntity.class)
+                 .setParameter("appointmentId", appointmentId)
+                 .getResultStream()
+                 .findFirst();
     }
 
     @Override
     public List<BillEntity> findAll() {
-        return em.createQuery("SELECT b FROM BillEntity b WHERE b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
-                .getResultList();
+        return em.createNamedQuery("Bill.findAll", BillEntity.class)
+                 .getResultList();
     }
 
     @Override
     public List<BillEntity> findAll(int page, int size) {
-        return em.createQuery("SELECT b FROM BillEntity b WHERE b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
-            .setFirstResult(page * size)
-            .setMaxResults(size)
-            .getResultList();
+        return em.createNamedQuery("Bill.findAll", BillEntity.class)
+                 .setFirstResult(page * size)
+                 .setMaxResults(size)
+                 .getResultList();
     }
 
     @Override
     public List<BillEntity> findByStatus(BillStatus status) {
-        return em.createQuery("SELECT b FROM BillEntity b WHERE b.status = :status AND b.deleted = false ORDER BY b.createdAt DESC", BillEntity.class)
-                .setParameter("status", status)
-                .getResultList();
+        return em.createNamedQuery("Bill.findByStatus", BillEntity.class)
+                 .setParameter("status", status)
+                 .getResultList();
     }
 
     @Override
     public List<BillEntity> filter(BillQuery query) {
-        StringBuilder jpql = new StringBuilder("SELECT b FROM BillEntity b WHERE b.deleted = false");
-        if (query.getStatus() != null && !query.getStatus().isEmpty()) {
-            jpql.append(" AND b.status = :status");
-        }
-        if (query.getPatientId() != null) {
-            jpql.append(" AND b.patient.id = :patientId");
-        }
-        if (query.getDoctorId() != null) {
-            jpql.append(" AND b.doctor.id = :doctorId");
-        }
-        if (query.getUnpaidOnly() != null && query.getUnpaidOnly()) {
-            jpql.append(" AND b.status = 'UNPAID'");
-        }
-        if (query.getFromDate() != null) {
-            jpql.append(" AND b.createdAt >= :fromDate");
-        }
-        if (query.getToDate() != null) {
-            jpql.append(" AND b.createdAt <= :toDate");
-        }
-        if (query.getMinAmount() != null) {
-            jpql.append(" AND b.amount >= :minAmount");
-        }
-        if (query.getMaxAmount() != null) {
-            jpql.append(" AND b.amount <= :maxAmount");
-        }
-        jpql.append(" ORDER BY b.createdAt DESC");
-        TypedQuery<BillEntity> q = em.createQuery(jpql.toString(), BillEntity.class);
-        if (query.getStatus() != null && !query.getStatus().isEmpty()) {
-            q.setParameter("status", query.getStatus());
-        }
-        if (query.getPatientId() != null) {
-            q.setParameter("patientId", query.getPatientId());
-        }
-        if (query.getDoctorId() != null) {
-            q.setParameter("doctorId", query.getDoctorId());
-        }
-        if (query.getFromDate() != null) {
-            q.setParameter("fromDate", query.getFromDate());
-        }
-        if (query.getToDate() != null) {
-            q.setParameter("toDate", query.getToDate());
-        }
-        if (query.getMinAmount() != null) {
-            q.setParameter("minAmount", query.getMinAmount());
-        }
-        if (query.getMaxAmount() != null) {
-            q.setParameter("maxAmount", query.getMaxAmount());
-        }
+        TypedQuery<BillEntity> q = em.createNamedQuery("Bill.filter", BillEntity.class)
+                .setParameter("status", query.getStatus() != null ? query.getStatus() : "")
+                .setParameter("patientId", query.getPatientId())
+                .setParameter("doctorId", query.getDoctorId())
+                .setParameter("unpaidOnly", query.getUnpaidOnly() != null ? query.getUnpaidOnly() : false)
+                .setParameter("fromDate", query.getFromDate())
+                .setParameter("toDate", query.getToDate())
+                .setParameter("minAmount", query.getMinAmount())
+                .setParameter("maxAmount", query.getMaxAmount());
         if (query.getPagination() != null) {
             q.setFirstResult(query.getPagination().page() * query.getPagination().size());
             q.setMaxResults(query.getPagination().size());

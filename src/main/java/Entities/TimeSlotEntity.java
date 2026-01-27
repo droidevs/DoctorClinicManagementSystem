@@ -29,6 +29,12 @@ import org.hibernate.annotations.Formula;
         @Index(name = "idx_time_slot_start_time", columnList = "start_time")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "TimeSlot.findById", query = "SELECT t FROM TimeSlotEntity t WHERE t.id = :id"),
+    @NamedQuery(name = "TimeSlot.findByDayScheduleId", query = "SELECT t FROM TimeSlotEntity t WHERE t.daySchedule.id = :dayScheduleId ORDER BY t.startTime ASC"),
+    @NamedQuery(name = "TimeSlot.findAll", query = "SELECT t FROM TimeSlotEntity t ORDER BY t.daySchedule.id, t.startTime ASC"),
+    @NamedQuery(name = "TimeSlot.findAvailable", query = "SELECT t FROM TimeSlotEntity t WHERE t.daySchedule.id = :dayScheduleId AND t.availableReservations > 0 ORDER BY t.startTime ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

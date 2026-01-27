@@ -25,6 +25,12 @@ import lombok.experimental.SuperBuilder;
                 @Index(name = "idx_presc_edit_notify", columnList = "requires_patient_notification")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "PrescriptionEditHistory.findById", query = "SELECT h FROM PrescriptionEditHistoryEntity h WHERE h.id = :id"),
+    @NamedQuery(name = "PrescriptionEditHistory.findByPrescriptionId", query = "SELECT h FROM PrescriptionEditHistoryEntity h WHERE h.prescription.id = :prescriptionId ORDER BY h.createdAt DESC"),
+    @NamedQuery(name = "PrescriptionEditHistory.findAll", query = "SELECT h FROM PrescriptionEditHistoryEntity h ORDER BY h.createdAt DESC"),
+    @NamedQuery(name = "PrescriptionEditHistory.findRequiringNotification", query = "SELECT h FROM PrescriptionEditHistoryEntity h WHERE h.requiresPatientNotification = true ORDER BY h.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 public class PrescriptionEditHistoryEntity extends BaseEntity {
 
@@ -67,4 +73,3 @@ public class PrescriptionEditHistoryEntity extends BaseEntity {
     @Column(name = "requires_patient_notification", nullable = false)
     private boolean requiresPatientNotification;
 }
-

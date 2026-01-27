@@ -30,6 +30,12 @@ import lombok.experimental.SuperBuilder;
         @Index(name = "idx_exception_recurrence", columnList = "recurrence")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "ScheduleException.findById", query = "SELECT e FROM ScheduleExceptionEntity e WHERE e.id = :id"),
+    @NamedQuery(name = "ScheduleException.findByDoctorId", query = "SELECT e FROM ScheduleExceptionEntity e WHERE e.doctor.id = :doctorId ORDER BY e.exceptionDate ASC"),
+    @NamedQuery(name = "ScheduleException.findAll", query = "SELECT e FROM ScheduleExceptionEntity e ORDER BY e.exceptionDate ASC"),
+    @NamedQuery(name = "ScheduleException.findUpcoming", query = "SELECT e FROM ScheduleExceptionEntity e WHERE e.exceptionDate >= :today ORDER BY e.exceptionDate ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
@@ -67,8 +73,17 @@ public class ScheduleExceptionEntity extends BaseEntity {
     private String reason;
 
     /* ===== VALIDATION ===== */
-    @PrePersist
-    @PreUpdate
+
+    @Override
+    protected void validateOnPersist() {
+        validateDates();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validateDates();
+    }
+
     private void validateDates() {
         if (recurrence == ExceptionRecurrence.ONE_TIME && exceptionDate == null) {
             throw new IllegalStateException("ONE_TIME exceptions must have exceptionDate");

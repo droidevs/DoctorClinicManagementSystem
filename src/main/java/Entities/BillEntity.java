@@ -37,6 +37,14 @@ import lombok.experimental.SuperBuilder;
                 @Index(name = "idx_bills_deleted", columnList = "deleted")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "Bill.findById", query = "SELECT b FROM BillEntity b WHERE b.id = :id"),
+    @NamedQuery(name = "Bill.findByAppointmentId", query = "SELECT b FROM BillEntity b WHERE b.appointment.id = :appointmentId AND b.deleted = false"),
+    @NamedQuery(name = "Bill.findAll", query = "SELECT b FROM BillEntity b WHERE b.deleted = false ORDER BY b.createdAt DESC"),
+    @NamedQuery(name = "Bill.findByStatus", query = "SELECT b FROM BillEntity b WHERE b.status = :status AND b.deleted = false ORDER BY b.createdAt DESC"),
+    @NamedQuery(name = "Bill.findUnpaid", query = "SELECT b FROM BillEntity b WHERE b.status != 'PAID' AND b.deleted = false ORDER BY b.createdAt DESC"),
+    @NamedQuery(name = "Bill.filter", query = "SELECT b FROM BillEntity b WHERE b.deleted = false AND (:status = '' OR b.status = :status) AND (:patientId IS NULL OR b.appointment.patient.id = :patientId) AND (:doctorId IS NULL OR b.appointment.doctor.id = :doctorId) AND (:unpaidOnly = false OR b.status != 'PAID') AND (:fromDate IS NULL OR b.createdAt >= :fromDate) AND (:toDate IS NULL OR b.createdAt <= :toDate) AND (:minAmount IS NULL OR b.amount >= :minAmount) AND (:maxAmount IS NULL OR b.amount <= :maxAmount) ORDER BY b.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 public class BillEntity extends BaseEntity {
 

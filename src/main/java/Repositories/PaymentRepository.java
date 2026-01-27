@@ -18,8 +18,9 @@ public interface PaymentRepository {
 
     Optional<PaymentEntity> findByBillId(UUID billId);
 
+    List<PaymentEntity> findAll();
+
     List<PaymentEntity> findByReceivedBy(UUID secretaryId);
 
     boolean existsByBillId(UUID billId);
 }
-

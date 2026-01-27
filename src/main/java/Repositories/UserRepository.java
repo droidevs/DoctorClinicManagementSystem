@@ -22,8 +22,13 @@ public interface UserRepository {
 
     List<UserEntity> findAll();
 
+    Optional<UserEntity> findByUsername(String username);
+
+    List<UserEntity> findAllActive();
+
+    List<UserEntity> findByRole(String roleName);
+
     boolean existsByEmail(String email);
 
     void delete(UserEntity user);
 }
-

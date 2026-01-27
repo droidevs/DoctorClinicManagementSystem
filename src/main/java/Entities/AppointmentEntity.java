@@ -27,11 +27,28 @@ import lombok.experimental.SuperBuilder;
     indexes = {
         @Index(name = "idx_appointment_doctor", columnList = "doctor_id"),
         @Index(name = "idx_appointment_patient", columnList = "patient_id"),
-        @Index(name = "idx_appointment_datetime", columnList = "appointment_datetime"),
+        @Index(name = "idx_appointment_datetime", columnList = "appointment_date"),
         @Index(name = "idx_appointment_status", columnList = "status"),
         @Index(name = "idx_appointments_deleted", columnList = "deleted")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Appointment.findById", query = "SELECT a FROM AppointmentEntity a WHERE a.id = :id"),
+    @NamedQuery(name = "Appointment.findByPatientId", query = "SELECT a FROM AppointmentEntity a WHERE a.patient.id = :patientId AND a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.findByDoctorId", query = "SELECT a FROM AppointmentEntity a WHERE a.doctor.id = :doctorId AND a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.findAll", query = "SELECT a FROM AppointmentEntity a WHERE a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.findByStatus", query = "SELECT a FROM AppointmentEntity a WHERE a.status = :status AND a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.findByDate", query = "SELECT a FROM AppointmentEntity a WHERE a.appointmentDate = :date AND a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.findUpcoming", query = "SELECT a FROM AppointmentEntity a WHERE a.appointmentDate >= :today AND a.deleted = false ORDER BY a.appointmentDate ASC"),
+    @NamedQuery(name = "Appointment.findByDoctorIdAndStatus", query = "SELECT a FROM AppointmentEntity a WHERE a.doctor.id = :doctorId AND a.status = :status AND a.deleted = false ORDER BY a.appointmentDate ASC"),
+    @NamedQuery(name = "Appointment.existsByDoctorIdAndDate", query = "SELECT COUNT(a) FROM AppointmentEntity a WHERE a.doctor.id = :doctorId AND a.appointmentDate = :date AND a.deleted = false"),
+    @NamedQuery(name = "Appointment.countByTimeSlotAndDate", query = "SELECT COUNT(a) FROM AppointmentEntity a WHERE a.slot.id = :slotId AND a.appointmentDate = :date AND a.deleted = false"),
+    @NamedQuery(name = "Appointment.countByExceptionSlotAndDate", query = "SELECT COUNT(a) FROM AppointmentEntity a WHERE a.exceptionSlot.id = :exceptionSlotId AND a.appointmentDate = :date AND a.deleted = false"),
+    @NamedQuery(name = "Appointment.countByDoctor", query = "SELECT COUNT(a) FROM AppointmentEntity a WHERE a.doctor.id = :doctorId AND a.deleted = false"),
+    @NamedQuery(name = "Appointment.countByPatient", query = "SELECT COUNT(a) FROM AppointmentEntity a WHERE a.patient.id = :patientId AND a.deleted = false"),
+    @NamedQuery(name = "Appointment.searchByDateRange", query = "SELECT a FROM AppointmentEntity a WHERE a.appointmentDate >= :from AND a.appointmentDate <= :to AND a.deleted = false ORDER BY a.appointmentDate DESC"),
+    @NamedQuery(name = "Appointment.filter", query = "SELECT a FROM AppointmentEntity a WHERE a.deleted = false AND (:doctorId IS NULL OR a.doctor.id = :doctorId) AND (:patientId IS NULL OR a.patient.id = :patientId) AND (:date IS NULL OR a.appointmentDate = :date) AND (:status IS NULL OR a.status = :status) ORDER BY a.appointmentDate DESC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

@@ -48,39 +48,31 @@ public class PaymentRepositoryImpl
 
     @Override
     public Optional<PaymentEntity> findByBillId(UUID billId) {
-        return em.createQuery("""
-                SELECT p
-                FROM PaymentEntity p
-                WHERE p.bill.id = :billId
-                """, PaymentEntity.class)
-                .setParameter("billId", billId)
-                .getResultStream()
-                .findFirst();
+        return em.createNamedQuery("Payment.findByBillId", PaymentEntity.class)
+                 .setParameter("billId", billId)
+                 .getResultStream()
+                 .findFirst();
+    }
+
+    @Override
+    public List<PaymentEntity> findAll() {
+        return em.createNamedQuery("Payment.findAll", PaymentEntity.class)
+                 .getResultList();
     }
 
     @Override
     public List<PaymentEntity> findByReceivedBy(UUID secretaryId) {
-        return em.createQuery("""
-                SELECT p
-                FROM PaymentEntity p
-                WHERE p.receivedBy.id = :secretaryId
-                ORDER BY p.receivedAt DESC
-                """, PaymentEntity.class)
-                .setParameter("secretaryId", secretaryId)
-                .getResultList();
+        return em.createNamedQuery("Payment.findByReceivedBy", PaymentEntity.class)
+                 .setParameter("secretaryId", secretaryId)
+                 .getResultList();
     }
 
     @Override
     public boolean existsByBillId(UUID billId) {
-        Long count = em.createQuery("""
-                SELECT COUNT(p)
-                FROM PaymentEntity p
-                WHERE p.bill.id = :billId
-                """, Long.class)
-                .setParameter("billId", billId)
-                .getSingleResult();
+        Long count = em.createNamedQuery("Payment.existsByBillId", Long.class)
+                       .setParameter("billId", billId)
+                       .getSingleResult();
 
         return count > 0;
     }
 }
-

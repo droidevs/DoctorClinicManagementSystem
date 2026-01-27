@@ -20,6 +20,8 @@ public interface PrescriptionRepository {
 
     List<PrescriptionEntity> findByAppointmentId(UUID appointmentId);
 
+    List<PrescriptionEntity> findByMedicationId(UUID medicationId);
+
     List<PrescriptionEntity> findAll();
 
     List<PrescriptionEntity> findAll(int page, int size);

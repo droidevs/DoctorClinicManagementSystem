@@ -55,55 +55,45 @@ public class PatientRepositoryImpl
 
     @Override
     public Optional<PatientEntity> findByUserId(UUID userId) {
-        TypedQuery<PatientEntity> query =
-                em.createQuery("""
-                    SELECT p
-                    FROM PatientEntity p
-                    WHERE p.user.id = :userId AND p.deleted = false
-                """, PatientEntity.class);
-
-        return query
-                .setParameter("userId", userId)
-                .getResultStream()
-                .findFirst();
+        return em.createNamedQuery("Patient.findByUserId", PatientEntity.class)
+                 .setParameter("userId", userId)
+                 .getResultStream()
+                 .findFirst();
     }
 
     @Override
     public List<PatientEntity> findAll() {
-        return em.createQuery("""
-                SELECT p
-                FROM PatientEntity p
-                WHERE p.deleted = false
-                ORDER BY p.createdAt DESC
-                """, PatientEntity.class)
-                .getResultList();
+        return em.createNamedQuery("Patient.findAll", PatientEntity.class)
+                 .getResultList();
     }
 
     @Override
     public List<PatientEntity> findAll(int page, int size) {
-        return em.createQuery("SELECT p FROM PatientEntity p WHERE p.deleted = false ORDER BY p.createdAt DESC", PatientEntity.class)
-            .setFirstResult(page * size)
-            .setMaxResults(size)
-            .getResultList();
+        return em.createNamedQuery("Patient.findAll", PatientEntity.class)
+                 .setFirstResult(page * size)
+                 .setMaxResults(size)
+                 .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findByName(String name) {
+        return em.createNamedQuery("Patient.findByName", PatientEntity.class)
+                 .setParameter("name", "%" + name + "%")
+                 .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findByPhone(String phone) {
+        return em.createNamedQuery("Patient.findByPhone", PatientEntity.class)
+                 .setParameter("phone", phone)
+                 .getResultList();
     }
 
     @Override
     public List<PatientEntity> filter(PatientQuery query) {
-        StringBuilder jpql = new StringBuilder("SELECT p FROM PatientEntity p WHERE p.deleted = false");
-        if (query.getName() != null && !query.getName().isEmpty()) {
-            jpql.append(" AND (LOWER(p.firstName) LIKE LOWER(:name) OR LOWER(p.lastName) LIKE LOWER(:name))");
-        }
-        if (query.getEmail() != null && !query.getEmail().isEmpty()) {
-            jpql.append(" AND LOWER(p.email) = LOWER(:email)");
-        }
-        jpql.append(" ORDER BY p.createdAt DESC");
-        TypedQuery<PatientEntity> q = em.createQuery(jpql.toString(), PatientEntity.class);
-        if (query.getName() != null && !query.getName().isEmpty()) {
-            q.setParameter("name", "%" + query.getName() + "%");
-        }
-        if (query.getEmail() != null && !query.getEmail().isEmpty()) {
-            q.setParameter("email", query.getEmail());
-        }
+        TypedQuery<PatientEntity> q = em.createNamedQuery("Patient.filter", PatientEntity.class)
+                .setParameter("name", query.getName() != null ? "%" + query.getName() + "%" : "%")
+                .setParameter("email", query.getEmail() != null ? query.getEmail() : "");
         if (query.getPagination() != null) {
             q.setFirstResult(query.getPagination().page() * query.getPagination().size());
             q.setMaxResults(query.getPagination().size());

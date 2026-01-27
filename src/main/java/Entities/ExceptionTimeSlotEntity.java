@@ -24,6 +24,11 @@ import lombok.experimental.SuperBuilder;
         @Index(name = "idx_exception_slot_start_time", columnList = "start_time")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "ExceptionTimeSlot.findById", query = "SELECT e FROM ExceptionTimeSlotEntity e WHERE e.id = :id"),
+    @NamedQuery(name = "ExceptionTimeSlot.findByExceptionId", query = "SELECT e FROM ExceptionTimeSlotEntity e WHERE e.exception.id = :exceptionId ORDER BY e.startTime ASC"),
+    @NamedQuery(name = "ExceptionTimeSlot.findAll", query = "SELECT e FROM ExceptionTimeSlotEntity e ORDER BY e.exception.id, e.startTime ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
@@ -48,8 +53,17 @@ public class ExceptionTimeSlotEntity extends BaseEntity {
     private int maxReservations;
 
     /* ===== VALIDATION ===== */
-    @PrePersist
-    @PreUpdate
+
+    @Override
+    protected void validateOnPersist() {
+        validateTimes();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validateTimes();
+    }
+
     private void validateTimes() {
         if (endTime.isBefore(startTime) || endTime.equals(startTime)) {
             throw new IllegalStateException("End time must be after start time");
@@ -59,5 +73,3 @@ public class ExceptionTimeSlotEntity extends BaseEntity {
         }
     }
 }
-
-

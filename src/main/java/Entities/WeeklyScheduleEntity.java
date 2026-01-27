@@ -27,6 +27,12 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_weekly_schedule_doctor_active", columnNames = "doctor_id")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "WeeklySchedule.findById", query = "SELECT w FROM WeeklyScheduleEntity w WHERE w.id = :id"),
+    @NamedQuery(name = "WeeklySchedule.findByDoctorId", query = "SELECT w FROM WeeklyScheduleEntity w WHERE w.doctor.id = :doctorId AND w.active = true"),
+    @NamedQuery(name = "WeeklySchedule.findAll", query = "SELECT w FROM WeeklyScheduleEntity w ORDER BY w.doctor.id ASC"),
+    @NamedQuery(name = "WeeklySchedule.findActive", query = "SELECT w FROM WeeklyScheduleEntity w WHERE w.active = true ORDER BY w.doctor.id ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

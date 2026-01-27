@@ -41,17 +41,22 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
 
     @Override
     public List<PrescriptionEntity> findByAppointmentId(UUID appointmentId) {
-        String jpql = "SELECT p FROM PrescriptionEntity p WHERE p.appointment.id = :appointmentId AND p.deleted = false";
-        TypedQuery<PrescriptionEntity> query = entityManager.createQuery(jpql, PrescriptionEntity.class);
-        query.setParameter("appointmentId", appointmentId);
-        return query.getResultList();
+        return entityManager.createNamedQuery("Prescription.findByAppointmentId", PrescriptionEntity.class)
+                            .setParameter("appointmentId", appointmentId)
+                            .getResultList();
+    }
+
+    @Override
+    public List<PrescriptionEntity> findByMedicationId(UUID medicationId) {
+        return entityManager.createNamedQuery("Prescription.findByMedicationId", PrescriptionEntity.class)
+                            .setParameter("medicationId", medicationId)
+                            .getResultList();
     }
 
     @Override
     public List<PrescriptionEntity> findAll() {
-        String jpql = "SELECT p FROM PrescriptionEntity p WHERE p.deleted = false";
-        TypedQuery<PrescriptionEntity> query = entityManager.createQuery(jpql, PrescriptionEntity.class);
-        return query.getResultList();
+        return entityManager.createNamedQuery("Prescription.findAll", PrescriptionEntity.class)
+                            .getResultList();
     }
 
     @Override
@@ -80,27 +85,10 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
 
     @Override
     public List<PrescriptionEntity> filter(Criteria.PrescriptionQuery query) {
-        StringBuilder jpql = new StringBuilder("SELECT p FROM PrescriptionEntity p WHERE p.deleted = false");
-        if (query.getAppointmentId() != null) {
-            jpql.append(" AND p.appointment.id = :appointmentId");
-        }
-        if (query.getPatientId() != null) {
-            jpql.append(" AND p.appointment.patient.id = :patientId");
-        }
-        if (query.getMedicationId() != null) {
-            jpql.append(" AND p.medication.id = :medicationId");
-        }
-        jpql.append(" ORDER BY p.createdAt DESC");
-        TypedQuery<PrescriptionEntity> q = entityManager.createQuery(jpql.toString(), PrescriptionEntity.class);
-        if (query.getAppointmentId() != null) {
-            q.setParameter("appointmentId", query.getAppointmentId());
-        }
-        if (query.getPatientId() != null) {
-            q.setParameter("patientId", query.getPatientId());
-        }
-        if (query.getMedicationId() != null) {
-            q.setParameter("medicationId", query.getMedicationId());
-        }
+        TypedQuery<PrescriptionEntity> q = entityManager.createNamedQuery("Prescription.filter", PrescriptionEntity.class)
+                .setParameter("appointmentId", query.getAppointmentId())
+                .setParameter("patientId", query.getPatientId())
+                .setParameter("medicationId", query.getMedicationId());
         if (query.getPagination() != null) {
             q.setFirstResult(query.getPagination().page() * query.getPagination().size());
             q.setMaxResults(query.getPagination().size());

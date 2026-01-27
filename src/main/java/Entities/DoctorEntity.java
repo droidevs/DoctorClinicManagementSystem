@@ -32,6 +32,15 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_doctor_user", columnNames = "user_id")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Doctor.findById", query = "SELECT d FROM DoctorEntity d WHERE d.id = :id"),
+    @NamedQuery(name = "Doctor.findByUserId", query = "SELECT d FROM DoctorEntity d WHERE d.user.id = :userId AND d.deleted = false"),
+    @NamedQuery(name = "Doctor.findAll", query = "SELECT d FROM DoctorEntity d WHERE d.deleted = false ORDER BY d.createdAt DESC"),
+    @NamedQuery(name = "Doctor.findByName", query = "SELECT d FROM DoctorEntity d WHERE (LOWER(d.firstName) LIKE LOWER(:name) OR LOWER(d.lastName) LIKE LOWER(:name)) AND d.deleted = false ORDER BY d.createdAt DESC"),
+    @NamedQuery(name = "Doctor.findBySpecialisation", query = "SELECT DISTINCT d FROM DoctorEntity d JOIN d.specialisations s WHERE s.name = :specialisation AND d.deleted = false ORDER BY d.createdAt DESC"),
+    @NamedQuery(name = "Doctor.findBySpecialisationId", query = "SELECT DISTINCT d FROM DoctorEntity d JOIN d.specialisations s WHERE s.id = :specialisationId AND d.deleted = false ORDER BY d.createdAt DESC"),
+    @NamedQuery(name = "Doctor.filter", query = "SELECT d FROM DoctorEntity d WHERE d.deleted = false AND (:name = '%' OR LOWER(d.firstName) LIKE LOWER(:name) OR LOWER(d.lastName) LIKE LOWER(:name)) AND (:email = '' OR LOWER(d.user.email) = LOWER(:email)) AND (:specialisation = '' OR EXISTS (SELECT 1 FROM d.specialisations s WHERE LOWER(s.name) = LOWER(:specialisation))) ORDER BY d.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

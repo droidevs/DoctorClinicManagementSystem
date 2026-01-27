@@ -28,6 +28,11 @@ import lombok.experimental.SuperBuilder;
         @Index(name = "idx_day_schedule_day", columnList = "day")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "DaySchedule.findById", query = "SELECT d FROM DayScheduleEntity d WHERE d.id = :id"),
+    @NamedQuery(name = "DaySchedule.findByWeeklyScheduleId", query = "SELECT d FROM DayScheduleEntity d WHERE d.weeklySchedule.id = :weeklyScheduleId ORDER BY d.day ASC"),
+    @NamedQuery(name = "DaySchedule.findAll", query = "SELECT d FROM DayScheduleEntity d ORDER BY d.weeklySchedule.id, d.day ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

@@ -29,6 +29,11 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_role_name", columnNames = "name")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Role.findById", query = "SELECT r FROM RoleEntity r WHERE r.id = :id"),
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM RoleEntity r WHERE r.name = :name"),
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM RoleEntity r ORDER BY r.name ASC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
@@ -59,4 +64,3 @@ public class RoleEntity extends BaseEntity {
     @Builder.Default
     private Set<PermissionEntity> permissions = new HashSet<>();
 }
-

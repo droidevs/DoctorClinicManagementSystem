@@ -28,6 +28,12 @@ import lombok.experimental.SuperBuilder;
                 @Index(name = "idx_secretary_status", columnList = "status")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "Secretary.findById", query = "SELECT s FROM SecretaryEntity s WHERE s.id = :id"),
+    @NamedQuery(name = "Secretary.findByUserId", query = "SELECT s FROM SecretaryEntity s WHERE s.user.id = :userId"),
+    @NamedQuery(name = "Secretary.findAll", query = "SELECT s FROM SecretaryEntity s ORDER BY s.createdAt DESC"),
+    @NamedQuery(name = "Secretary.findByStatus", query = "SELECT s FROM SecretaryEntity s WHERE s.status = :status ORDER BY s.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 public class SecretaryEntity extends BaseEntity {
 
@@ -56,4 +62,3 @@ public class SecretaryEntity extends BaseEntity {
     @Column(name = "can_verify_identity", nullable = false)
     private boolean canVerifyIdentity;
 }
-

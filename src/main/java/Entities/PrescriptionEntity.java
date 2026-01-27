@@ -34,6 +34,14 @@ import lombok.experimental.SuperBuilder;
                 @Index(name = "idx_prescriptions_deleted", columnList = "deleted")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "Prescription.findById", query = "SELECT p FROM PrescriptionEntity p WHERE p.id = :id"),
+    @NamedQuery(name = "Prescription.findByAppointmentId", query = "SELECT p FROM PrescriptionEntity p WHERE p.appointment.id = :appointmentId AND p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Prescription.findByMedicationId", query = "SELECT p FROM PrescriptionEntity p WHERE p.medication.id = :medicationId AND p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Prescription.findAll", query = "SELECT p FROM PrescriptionEntity p WHERE p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Prescription.findByPatient", query = "SELECT p FROM PrescriptionEntity p WHERE p.appointment.patient.id = :patientId AND p.deleted = false ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Prescription.filter", query = "SELECT p FROM PrescriptionEntity p WHERE p.deleted = false AND (:appointmentId IS NULL OR p.appointment.id = :appointmentId) AND (:patientId IS NULL OR p.appointment.patient.id = :patientId) AND (:medicationId IS NULL OR p.medication.id = :medicationId) ORDER BY p.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter

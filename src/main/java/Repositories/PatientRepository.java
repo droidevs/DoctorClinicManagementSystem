@@ -24,6 +24,10 @@ public interface PatientRepository {
 
     List<PatientEntity> findAll(int page, int size);
 
+    List<PatientEntity> findByName(String name);
+
+    List<PatientEntity> findByPhone(String phone);
+
     void softDelete(UUID id);
 
     void restore(UUID id);

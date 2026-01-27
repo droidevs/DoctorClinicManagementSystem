@@ -34,10 +34,18 @@ import java.time.Instant;
         indexes = {
                 @Index(name = "idx_payment_bill", columnList = "bill_id"),
                 @Index(name = "idx_payment_method", columnList = "payment_method"),
-                @Index(name = "idx_payment_received_by", columnList = "received_by"),
-                @Index(name = "idx_payment_received_at", columnList = "received_at")
+                @Index(name = "idx_payment_status", columnList = "status"),
+                @Index(name = "idx_payment_paid_at", columnList = "paid_at"),
+                @Index(name = "idx_payment_received_by", columnList = "received_by")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "Payment.findById", query = "SELECT p FROM PaymentEntity p WHERE p.id = :id"),
+    @NamedQuery(name = "Payment.findByBillId", query = "SELECT p FROM PaymentEntity p WHERE p.bill.id = :billId"),
+    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM PaymentEntity p ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Payment.findByReceivedBy", query = "SELECT p FROM PaymentEntity p WHERE p.receivedBy.id = :secretaryId ORDER BY p.createdAt DESC"),
+    @NamedQuery(name = "Payment.existsByBillId", query = "SELECT COUNT(p) FROM PaymentEntity p WHERE p.bill.id = :billId")
+})
 @EntityListeners(AuditListener.class)
 public class PaymentEntity extends BaseEntity {
 
@@ -93,8 +101,16 @@ public class PaymentEntity extends BaseEntity {
 
     /* ===== VALIDATION ===== */
 
-    @PrePersist
-    @PreUpdate
+    @Override
+    protected void validateOnPersist() {
+        validatePayment();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validatePayment();
+    }
+
     private void validatePayment() {
 
         if (amount == null || amount.signum() <= 0) {
@@ -114,4 +130,3 @@ public class PaymentEntity extends BaseEntity {
         }
     }
 }
-

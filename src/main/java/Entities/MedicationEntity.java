@@ -28,6 +28,13 @@ import lombok.experimental.SuperBuilder;
                 @Index(name = "idx_medication_category", columnList = "category_id")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "Medication.findById", query = "SELECT m FROM MedicationEntity m WHERE m.id = :id"),
+    @NamedQuery(name = "Medication.findByDrugCode", query = "SELECT m FROM MedicationEntity m WHERE m.drugCode = :drugCode"),
+    @NamedQuery(name = "Medication.findByGenericName", query = "SELECT m FROM MedicationEntity m WHERE LOWER(m.genericName) LIKE LOWER(:name) ORDER BY m.genericName ASC"),
+    @NamedQuery(name = "Medication.findAll", query = "SELECT m FROM MedicationEntity m ORDER BY m.genericName ASC"),
+    @NamedQuery(name = "Medication.findActive", query = "SELECT m FROM MedicationEntity m WHERE m.active = true ORDER BY m.genericName ASC")
+})
 @EntityListeners(AuditListener.class)
 public class MedicationEntity extends BaseEntity {
 

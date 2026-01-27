@@ -8,6 +8,9 @@ import Listeners.AuditListener;
 import Loggings.business.action.BusinessAction;
 import Loggings.business.resource.ResourceType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedQueries;
 import jakarta.persistence.Table;
 
 import jakarta.persistence.*;
@@ -28,7 +31,22 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "audit_logs")
+@Table(
+    name = "audit_logs",
+    indexes = {
+        @Index(name = "idx_audit_user", columnList = "user_id"),
+        @Index(name = "idx_audit_resource", columnList = "resource_type, resource_id"),
+        @Index(name = "idx_audit_action", columnList = "action"),
+        @Index(name = "idx_audit_created_at", columnList = "created_at")
+    }
+)
+@NamedQueries({
+    @NamedQuery(name = "AuditLog.findById", query = "SELECT a FROM AuditLog a WHERE a.id = :id"),
+    @NamedQuery(name = "AuditLog.findByUserId", query = "SELECT a FROM AuditLog a WHERE a.userId = :userId ORDER BY a.createdAt DESC"),
+    @NamedQuery(name = "AuditLog.findByResource", query = "SELECT a FROM AuditLog a WHERE a.resourceType = :resourceType AND a.resourceId = :resourceId ORDER BY a.createdAt DESC"),
+    @NamedQuery(name = "AuditLog.findAll", query = "SELECT a FROM AuditLog a ORDER BY a.createdAt DESC"),
+    @NamedQuery(name = "AuditLog.findByAction", query = "SELECT a FROM AuditLog a WHERE a.action = :action ORDER BY a.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 public class AuditLog extends BaseEntity{
 

@@ -26,6 +26,12 @@ import java.util.Set;
                 @Index(name = "idx_medicine_category_active", columnList = "is_active")
         }
 )
+@NamedQueries({
+    @NamedQuery(name = "MedicineCategory.findById", query = "SELECT c FROM MedicineCategoryEntity c WHERE c.id = :id"),
+    @NamedQuery(name = "MedicineCategory.findByCode", query = "SELECT c FROM MedicineCategoryEntity c WHERE c.code = :code"),
+    @NamedQuery(name = "MedicineCategory.findAll", query = "SELECT c FROM MedicineCategoryEntity c ORDER BY c.name ASC"),
+    @NamedQuery(name = "MedicineCategory.findActive", query = "SELECT c FROM MedicineCategoryEntity c WHERE c.active = true ORDER BY c.name ASC")
+})
 @EntityListeners(AuditListener.class)
 public class MedicineCategoryEntity extends BaseEntity {
 

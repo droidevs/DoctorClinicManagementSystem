@@ -28,6 +28,12 @@ import lombok.experimental.SuperBuilder;
         @UniqueConstraint(name = "uk_specialisation_name", columnNames = "name")
     }
 )
+@NamedQueries({
+    @NamedQuery(name = "Specialisation.findById", query = "SELECT s FROM SpecialisationEntity s WHERE s.id = :id"),
+    @NamedQuery(name = "Specialisation.findByName", query = "SELECT s FROM SpecialisationEntity s WHERE s.name = :name AND s.deleted = false"),
+    @NamedQuery(name = "Specialisation.findAll", query = "SELECT s FROM SpecialisationEntity s WHERE s.deleted = false ORDER BY s.createdAt DESC"),
+    @NamedQuery(name = "Specialisation.findByNameLike", query = "SELECT s FROM SpecialisationEntity s WHERE LOWER(s.name) LIKE LOWER(:name) AND s.deleted = false ORDER BY s.createdAt DESC")
+})
 @EntityListeners(AuditListener.class)
 @Getter
 @Setter
