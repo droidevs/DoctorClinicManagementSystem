@@ -11,6 +11,7 @@ CREATE TABLE specialisations (
     id UUID PRIMARY KEY,
 
     name VARCHAR(150) NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -31,3 +32,6 @@ CREATE TABLE specialisations (
 
 CREATE INDEX idx_specialisation_name
     ON specialisations (name);
+
+CREATE INDEX idx_specialisations_deleted
+    ON specialisations (deleted);

@@ -7,6 +7,7 @@ CREATE TABLE prescriptions (
     -- Relations
     appointment_id UUID NOT NULL,
     medication_id UUID NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     -- Embedded Dosage
     dosage_value NUMERIC(10,4),
@@ -49,6 +50,7 @@ CREATE TABLE prescriptions (
 CREATE INDEX idx_prescription_appointment ON prescriptions (appointment_id);
 CREATE INDEX idx_prescription_medication ON prescriptions (medication_id);
 CREATE INDEX idx_prescription_created_at ON prescriptions (created_at);
+CREATE INDEX idx_prescriptions_deleted ON prescriptions (deleted);
 
 -- Table for prescription specific times (ElementCollection)
 CREATE TABLE prescription_specific_times (

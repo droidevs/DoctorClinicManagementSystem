@@ -16,6 +16,7 @@ CREATE TABLE doctors (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     gender VARCHAR(10),
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -45,3 +46,5 @@ CREATE INDEX idx_doctor_user
 CREATE INDEX idx_doctor_name
     ON doctors (last_name, first_name);
 
+CREATE INDEX idx_doctors_deleted
+    ON doctors (deleted);

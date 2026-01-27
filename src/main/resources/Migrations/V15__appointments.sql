@@ -14,6 +14,7 @@ CREATE TABLE appointments (
     doctor_id UUID NOT NULL,
 
     appointment_date DATE NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     time_slot_id UUID,
     exception_slot_id UUID,
@@ -70,3 +71,6 @@ CREATE INDEX idx_appointment_datetime
 
 CREATE INDEX idx_appointment_status
     ON appointments (status);
+
+CREATE INDEX idx_appointments_deleted
+    ON appointments (deleted);

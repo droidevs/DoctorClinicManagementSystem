@@ -7,6 +7,7 @@ CREATE TABLE bills (
     amount NUMERIC(10,2) NOT NULL,
     status VARCHAR(30) NOT NULL,
     paid_at TIMESTAMP WITH TIME ZONE,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -46,3 +47,6 @@ CREATE INDEX idx_bill_status
 
 CREATE INDEX idx_bill_paid_at
     ON bills (paid_at);
+
+CREATE INDEX idx_bills_deleted
+    ON bills (deleted);

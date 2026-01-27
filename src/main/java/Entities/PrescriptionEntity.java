@@ -30,7 +30,8 @@ import lombok.experimental.SuperBuilder;
         indexes = {
                 @Index(name = "idx_prescription_appointment", columnList = "appointment_id"),
                 @Index(name = "idx_prescription_medication", columnList = "medication_id"),
-                @Index(name = "idx_prescription_created_at", columnList = "created_at")
+                @Index(name = "idx_prescription_created_at", columnList = "created_at"),
+                @Index(name = "idx_prescriptions_deleted", columnList = "deleted")
         }
 )
 @EntityListeners(AuditListener.class)

@@ -20,6 +20,7 @@ CREATE TABLE patients (
 
     phone VARCHAR(30),
     address VARCHAR(255),
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -48,3 +49,6 @@ CREATE INDEX idx_patient_user
 
 CREATE INDEX idx_patient_phone
     ON patients (phone);
+
+CREATE INDEX idx_patients_deleted
+    ON patients (deleted);

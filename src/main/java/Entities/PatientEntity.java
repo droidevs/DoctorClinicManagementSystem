@@ -21,7 +21,8 @@ import lombok.experimental.SuperBuilder;
     name = "patients",
     indexes = {
         @Index(name = "idx_patient_user", columnList = "user_id"),
-        @Index(name = "idx_patient_phone", columnList = "phone")
+        @Index(name = "idx_patient_phone", columnList = "phone"),
+        @Index(name = "idx_patients_deleted", columnList = "deleted")
     },
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_patient_user", columnNames = "user_id")

@@ -15,6 +15,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     role_id UUID NOT NULL,
     enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -26,4 +27,4 @@ CREATE TABLE users (
 CREATE INDEX idx_user_username ON users (username);
 CREATE INDEX idx_user_email ON users (email);
 CREATE INDEX idx_user_role ON users (role_id);
-
+CREATE INDEX idx_users_deleted ON users (deleted);
