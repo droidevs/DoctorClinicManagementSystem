@@ -113,4 +113,31 @@ public class PrescriptionEntity extends BaseEntity {
     )
     @Builder.Default
     private List<PrescriptionEditHistoryEntity> editHistory = new ArrayList<>();
+
+    /* ===== VALIDATION ===== */
+
+    @Override
+    protected void validateOnPersist() {
+        validatePrescriptionData();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validatePrescriptionData();
+    }
+
+    private void validatePrescriptionData() {
+        if (dosage != null && dosage.getValue() != null && dosage.getValue().intValue() <= 0) {
+            throw new IllegalStateException("Dosage value must be greater than 0");
+        }
+        if (frequency != null && frequency.getTimesPerPeriod() != null && frequency.getTimesPerPeriod() <= 0) {
+            throw new IllegalStateException("Frequency times per period must be greater than 0");
+        }
+        if (durationDays != null && durationDays <= 0) {
+            throw new IllegalStateException("Duration days must be greater than 0");
+        }
+        if (refillsAllowed != null && refillsAllowed < 0) {
+            throw new IllegalStateException("Refills allowed cannot be negative");
+        }
+    }
 }

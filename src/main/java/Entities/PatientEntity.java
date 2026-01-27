@@ -73,4 +73,22 @@ public class PatientEntity extends BaseEntity {
     @Column(name = "deleted", nullable = false)
     @Builder.Default
     private boolean deleted = false;
+
+    /* ===== VALIDATION ===== */
+
+    @Override
+    protected void validateOnPersist() {
+        validateDateOfBirth();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validateDateOfBirth();
+    }
+
+    private void validateDateOfBirth() {
+        if (dateOfBirth != null && dateOfBirth.isAfter(java.time.LocalDate.now())) {
+            throw new IllegalStateException("Date of birth cannot be in the future");
+        }
+    }
 }

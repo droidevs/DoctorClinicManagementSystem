@@ -62,5 +62,22 @@ public class TimeSlotEntity extends BaseEntity {
     """)
     @Setter(AccessLevel.NONE)
     private int availableReservations;
-}
 
+    /* ===== VALIDATION ===== */
+
+    @Override
+    protected void validateOnPersist() {
+        validateTimeSlot();
+    }
+
+    @Override
+    protected void validateOnUpdate() {
+        validateTimeSlot();
+    }
+
+    private void validateTimeSlot() {
+        if (startTime != null && endTime != null && !startTime.isBefore(endTime)) {
+            throw new IllegalStateException("Start time must be before end time");
+        }
+    }
+}
