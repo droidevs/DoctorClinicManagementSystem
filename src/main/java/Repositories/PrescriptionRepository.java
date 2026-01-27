@@ -4,6 +4,7 @@
  */
 package Repositories;
 
+import Criteria.PrescriptionQuery;
 import Entities.PrescriptionEntity;
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +24,9 @@ public interface PrescriptionRepository {
 
     List<PrescriptionEntity> findAll(int page, int size);
 
-    void softDelete(UUID id);
-
     void restore(UUID id);
 
-    List<PrescriptionEntity> findByPatientId(UUID patientId);
+    List<PrescriptionEntity> filter(PrescriptionQuery query);
 
     void delete(PrescriptionEntity prescription);
 }

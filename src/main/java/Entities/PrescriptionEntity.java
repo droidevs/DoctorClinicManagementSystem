@@ -99,6 +99,10 @@ public class PrescriptionEntity extends BaseEntity {
     @Column(name = "refills_allowed")
     private Integer refillsAllowed;
 
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+
     /* ===== EDIT HISTORY ===== */
     @OneToMany(
             mappedBy = "prescription",
@@ -109,5 +113,3 @@ public class PrescriptionEntity extends BaseEntity {
     @Builder.Default
     private List<PrescriptionEditHistoryEntity> editHistory = new ArrayList<>();
 }
-
-
