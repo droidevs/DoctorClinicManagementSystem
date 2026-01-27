@@ -7,7 +7,7 @@ package Repositories;
 
 import Entities.BillEntity;
 import Enums.BillStatus;
-import Requests.BillFilterRequest;
+import Criteria.BillQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,5 +38,5 @@ public interface BillingRepository {
 
     List<BillEntity> searchByDateRange(String from, String to);
 
-    List<BillEntity> filter(BillFilterRequest request);
+    List<BillEntity> filter(BillQuery query);
 }

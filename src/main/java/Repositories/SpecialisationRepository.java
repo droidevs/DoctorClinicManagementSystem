@@ -5,7 +5,7 @@
 package Repositories;
 
 import Entities.SpecialisationEntity;
-import Requests.SpecialisationFilterRequest;
+import Criteria.SpecialisationQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,5 +34,5 @@ public interface SpecialisationRepository {
 
     void delete(SpecialisationEntity specialisation);
 
-    List<SpecialisationEntity> filter(SpecialisationFilterRequest request);
+    List<SpecialisationEntity> filter(SpecialisationQuery query);
 }

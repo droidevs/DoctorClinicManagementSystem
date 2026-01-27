@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import Criteria.AppointmentQuery;
 
 public interface AppointmentRepository {
 
@@ -57,5 +58,5 @@ public interface AppointmentRepository {
 
     long countByExceptionSlotAndDate(UUID exceptionSlotId, LocalDate date);
 
-    List<AppointmentEntity> filter(AppointmentFilterRequest request);
+    List<AppointmentEntity> filter(AppointmentQuery query);
 }

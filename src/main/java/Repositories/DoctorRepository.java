@@ -5,7 +5,7 @@
 package Repositories;
 
 import Entities.DoctorEntity;
-import Requests.DoctorFilterRequest;
+import Criteria.DoctorQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,5 +40,5 @@ public interface DoctorRepository {
 
     void assignPatient(UUID doctorId, UUID patientId);
 
-    List<DoctorEntity> filter(DoctorFilterRequest request);
+    List<DoctorEntity> filter(DoctorQuery query);
 }

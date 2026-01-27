@@ -5,7 +5,7 @@
 package Repositories;
 
 import Entities.PatientEntity;
-import Requests.PatientFilterRequest;
+import Criteria.PatientQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,5 +34,5 @@ public interface PatientRepository {
 
     void delete(PatientEntity patient);
 
-    List<PatientEntity> filter(PatientFilterRequest request);
+    List<PatientEntity> filter(PatientQuery query);
 }
