@@ -1,9 +1,9 @@
-
 CREATE TABLE secretaries (
     id UUID PRIMARY KEY,
 
     user_id UUID NOT NULL,
     status VARCHAR(30) NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     can_receive_payments BOOLEAN NOT NULL DEFAULT FALSE,
     can_verify_identity BOOLEAN NOT NULL DEFAULT FALSE,
@@ -36,3 +36,6 @@ CREATE INDEX idx_secretary_user
 
 CREATE INDEX idx_secretary_status
     ON secretaries (status);
+
+CREATE INDEX idx_secretaries_deleted
+    ON secretaries (deleted);

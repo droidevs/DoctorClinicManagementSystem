@@ -7,6 +7,7 @@ CREATE TABLE medications (
     generic_name VARCHAR(150) NOT NULL,
     brand_name VARCHAR(150),
     drug_class VARCHAR(100),
+    active BOOLEAN,
     category_id UUID NOT NULL,
     contraindications VARCHAR(2000),
 

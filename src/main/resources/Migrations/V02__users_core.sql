@@ -19,6 +19,8 @@ CREATE TABLE users (
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
+    created_by UUID,
+    updated_by UUID,
 
     CONSTRAINT uk_user_username UNIQUE (username),
     CONSTRAINT uk_user_email UNIQUE (email)

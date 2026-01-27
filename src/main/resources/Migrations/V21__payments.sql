@@ -1,4 +1,3 @@
-
 CREATE TABLE payments (
     id UUID PRIMARY KEY,
 
@@ -8,6 +7,7 @@ CREATE TABLE payments (
     received_by UUID NOT NULL,
     stripe_payment_intent_id VARCHAR(150),
     received_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT FALSE,
 
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
@@ -58,3 +58,6 @@ CREATE INDEX idx_payment_received_by
 
 CREATE INDEX idx_payment_received_at
     ON payments (received_at);
+
+CREATE INDEX idx_payments_deleted
+    ON payments (deleted);

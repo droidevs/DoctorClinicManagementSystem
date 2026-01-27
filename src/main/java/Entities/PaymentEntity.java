@@ -34,9 +34,9 @@ import java.time.Instant;
         indexes = {
                 @Index(name = "idx_payment_bill", columnList = "bill_id"),
                 @Index(name = "idx_payment_method", columnList = "payment_method"),
-                @Index(name = "idx_payment_status", columnList = "status"),
-                @Index(name = "idx_payment_paid_at", columnList = "paid_at"),
-                @Index(name = "idx_payment_received_by", columnList = "received_by")
+                @Index(name = "idx_payment_received_by", columnList = "received_by"),
+                @Index(name = "idx_payment_received_at", columnList = "received_at"),
+                @Index(name = "idx_payments_deleted", columnList = "deleted")
         }
 )
 @NamedQueries({
