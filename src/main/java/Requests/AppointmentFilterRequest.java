@@ -6,7 +6,6 @@ package Requests;
 
 import Validators.annotations.ValidAppointmentDate;
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -14,6 +13,10 @@ import java.util.UUID;
 
 @ValidAppointmentDate
 public record AppointmentFilterRequest(
+
+        int page,
+
+        int size,
 
         // Optional filter by doctor
         // @NotNull can be added if required
@@ -33,4 +36,4 @@ public record AppointmentFilterRequest(
         @Nullable
         String status
 
-) {}
+) implements PageRequest {}

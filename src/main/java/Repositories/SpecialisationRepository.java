@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.SpecialisationEntity;
+import Requests.SpecialisationFilterRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,4 +33,6 @@ public interface SpecialisationRepository {
     boolean existsByName(String name);
 
     void delete(SpecialisationEntity specialisation);
+
+    List<SpecialisationEntity> filter(SpecialisationFilterRequest request);
 }

@@ -7,6 +7,7 @@ package Services;
 import Dtos.PatientDto;
 import Requests.CreatePatientRequest;
 import Requests.UpdatePatientRequest;
+import Requests.PatientFilterRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,4 +32,6 @@ public interface PatientService {
     List<PatientDto> searchByName(String name);
 
     boolean existsByEmail(String email);
+
+    List<PatientDto> filter(PatientFilterRequest request);
 }

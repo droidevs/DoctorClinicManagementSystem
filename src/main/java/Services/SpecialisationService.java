@@ -30,8 +30,6 @@ public interface SpecialisationService {
 
     public SpecialisationDto update(UUID id, UpdateSpecialisationRequest request);
 
-    List<SpecialisationDto> findAll(int page, int size);
-
     void softDelete(String id);
 
     void restore(String id);

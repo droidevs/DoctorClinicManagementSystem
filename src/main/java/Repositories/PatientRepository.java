@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.PatientEntity;
+import Requests.PatientFilterRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,4 +33,6 @@ public interface PatientRepository {
     boolean existsByEmail(String email);
 
     void delete(PatientEntity patient);
+
+    List<PatientEntity> filter(PatientFilterRequest request);
 }

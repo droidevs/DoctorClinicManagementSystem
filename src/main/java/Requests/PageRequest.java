@@ -8,11 +8,7 @@ package Requests;
  *
  * @author admin
  */
-public record PageRequest(
-        
-        int page,
-        
-        int size
-        ) {
-
+public interface PageRequest {
+    int page();
+    int size();
 }

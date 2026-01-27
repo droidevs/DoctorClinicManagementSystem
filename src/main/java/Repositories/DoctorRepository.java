@@ -5,6 +5,7 @@
 package Repositories;
 
 import Entities.DoctorEntity;
+import Requests.DoctorFilterRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,4 +39,6 @@ public interface DoctorRepository {
     boolean existsByEmail(String email);
 
     void assignPatient(UUID doctorId, UUID patientId);
+
+    List<DoctorEntity> filter(DoctorFilterRequest request);
 }

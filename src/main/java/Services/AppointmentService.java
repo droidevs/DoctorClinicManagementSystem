@@ -30,8 +30,6 @@ public interface AppointmentService {
 
     List<AppointmentDto> filter(AppointmentFilterRequest request);
 
-    List<AppointmentDto> filter(AppointmentFilterRequest request, int page, int size);
-
     AppointmentDto updateStatus(UUID id, String status);
     
     AppointmentDto complete(String id, CompleteAppointmentRequest request);

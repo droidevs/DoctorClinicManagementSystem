@@ -7,6 +7,7 @@ package Services;
 import Dtos.DoctorDto;
 import Requests.AssignSpecialisationsRequest;
 import Requests.CreateDoctorRequest;
+import Requests.DoctorFilterRequest;
 import Requests.UpdateDoctorRequest;
 import java.util.List;
 import java.util.UUID;
@@ -36,4 +37,6 @@ public interface DoctorService {
     boolean existsByEmail(String email);
 
     void assignPatient(UUID doctorId, UUID patientId);
+
+    List<DoctorDto> filter(DoctorFilterRequest request);
 }

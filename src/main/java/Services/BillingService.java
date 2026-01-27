@@ -24,8 +24,6 @@ public interface BillingService {
 
     List<BillDto> filter(BillFilterRequest request);
 
-    List<BillDto> filter(BillFilterRequest request, int page, int size);
-
     BillDto pay(UUID id, PaymentRequest request);
 
     void softDelete(UUID id);

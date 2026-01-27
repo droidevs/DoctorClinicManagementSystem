@@ -7,12 +7,14 @@ package Requests;
 import Validators.annotations.ValidBillFilter;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @ValidBillFilter
 public record BillFilterRequest(
+
+        int page,
+        int size,
 
         @Pattern(regexp = "PAID|UNPAID",
                  message = "Status must be PAID or UNPAID")
@@ -36,11 +38,11 @@ public record BillFilterRequest(
         @DecimalMin(value = "0.0", inclusive = true, message = "maxAmount must be >= 0")
         Double maxAmount
 
-) {
+) implements PageRequest {
 
     // Builder method for convenience
-    public static BillFilterRequest of(String status, UUID patientId, Boolean unpaidOnly) {
-        return new BillFilterRequest(status, patientId, null, unpaidOnly, null, null, null, null);
+    public static BillFilterRequest of(int page, int size, String status, UUID patientId, Boolean unpaidOnly) {
+        return new BillFilterRequest(page, size, status, patientId, null, unpaidOnly, null, null, null, null);
     }
 
     // Optional: method to convert date strings to LocalDate

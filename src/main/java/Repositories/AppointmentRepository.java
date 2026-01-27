@@ -7,6 +7,7 @@ package Repositories;
 
 import Entities.AppointmentEntity;
 import Enums.AppointmentStatus;
+import Requests.AppointmentFilterRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,4 +55,6 @@ public interface AppointmentRepository {
     long countByTimeSlotAndDate(UUID slotId, LocalDate date);
 
     long countByExceptionSlotAndDate(UUID exceptionSlotId, LocalDate date);
+
+    List<AppointmentEntity> filter(AppointmentFilterRequest request);
 }
